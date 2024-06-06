@@ -1,8 +1,7 @@
 .coin-display {
-    display: flex;
+    display: block;
     margin: 0 auto;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
     gap: 20px;
     font-family: 'belligerent', sans-serif;
     background-color: rgba(20, 33, 61, 0.5);
@@ -14,6 +13,8 @@
     color: #e9c46a;
 
     img {
-        width: 200px;
+        width: 148px;
+        display: block;
+        margin: 0 auto;
     }
 }

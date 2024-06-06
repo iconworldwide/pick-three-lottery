@@ -45,12 +45,12 @@
   .number-line {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
   }
   
   .number-button {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background-color: #fff;
     border: 2px solid #e9c46a;
     border-radius: 50%;
