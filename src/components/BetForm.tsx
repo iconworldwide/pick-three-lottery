@@ -7,7 +7,7 @@ interface BetFormProps {
 }
 
 const BetForm: React.FC<BetFormProps> = ({ placeBet, disableBet }) => {
-  const [numbers, setNumbers] = useState<number[]>([null, null, null]);
+  const [numbers, setNumbers] = useState<number[]>([0, 0, 0]);
   const [exactMatch, setExactMatch] = useState(true);
 
   const selectNumber = (position: number, num: number) => {
