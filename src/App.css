@@ -1,5 +1,10 @@
-:root {
-  --tg-theme-bg-color: #efeff3;
-  --tg-theme-button-color: #2eaddc;
-  --tg-theme-button-text-color: white;
+body {
+  margin: 0;
+}
+
+.container {
+  background:linear-gradient(0deg, rgb(2, 48, 71, 0.3), rgb(2, 48, 71, 0.3)), url("./assets/images/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
 }

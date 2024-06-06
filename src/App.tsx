@@ -8,6 +8,12 @@ import { Button, FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
+import Header from "./components/Header";
+import { useState } from "react";
+import CoinDisplay from "./components/CoinDisplay";
+import BetForm from "./components/BetForm";
+import DrawButton from "./components/DrawButton";
+import OverlayPopup from "./components/OverlayPopup";
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -18,7 +24,6 @@ const StyledApp = styled.div`
     color: white;
   }
   min-height: 100vh;
-  padding: 20px 20px;
 `;
 
 const AppContainer = styled.div`
@@ -27,26 +32,60 @@ const AppContainer = styled.div`
 `;
 
 function App() {
-  const { network } = useTonConnect();
+  
+  const [lastDraw, setLastDraw] = useState<number[]>([9, 9, 9]);
+  const [coins, setCoins] = useState<number>(1824);
+  const [userBets, setUserBets] = useState<{ numbers: number[], exactMatch: boolean }[]>([]);
+  const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showOverlay, setShowOverlay] = useState<boolean>(false);
+  const [drawnNumbers, setDrawnNumbers] = useState<number[]>([]);
+
+  const placeBet = (numbers: number[], exactMatch: boolean) => {
+    setUserBets([...userBets, { numbers, exactMatch }]);
+    setIsDrawEnabled(true);
+  };
+
+  const drawNumbers = async () => {
+    setIsLoading(true);
+    setShowOverlay(true);
+
+    // Simulate drawing numbers with a delay
+    const newDraw = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+    setDrawnNumbers(newDraw);
+
+    // Check for winning numbers
+    userBets.forEach(bet => {
+      const isWinner = bet.exactMatch
+        ? bet.numbers.every((num, index) => num === newDraw[index])
+        : bet.numbers.every(num => newDraw.includes(num));
+
+      if (isWinner) {
+        setCoins(coins + 100); // Update coins based on the win
+      }
+    });
+
+    setLastDraw(newDraw);
+    setIsLoading(false);
+    setUserBets([]);
+    setIsDrawEnabled(false);
+  };
+
+  const closeOverlay = () => {
+    setShowOverlay(false);
+  };
 
   return (
     <StyledApp>
       <AppContainer>
         <FlexBoxCol>
-          <FlexBoxRow>
-          <div>Gangster Games</div>
-            <TonConnectButton />
-            <Button>
-              {network
-                ? network === CHAIN.MAINNET
-                  ? "mainnet"
-                  : "testnet"
-                : "N/A"}
-            </Button>
-          </FlexBoxRow>
-          <Counter />
-          <TransferTon />
-          <Jetton />
+          <div className="container">
+            <Header lastDraw={lastDraw} />
+            <CoinDisplay coins={coins} />
+            <BetForm placeBet={placeBet} disableBet={isLoading || isDrawEnabled} />
+            <DrawButton drawNumbers={drawNumbers} isDisabled={!isDrawEnabled || isLoading} />
+            {showOverlay && <OverlayPopup numbers={drawnNumbers} onClose={closeOverlay} />}
+          </div>
         </FlexBoxCol>
       </AppContainer>
     </StyledApp>
