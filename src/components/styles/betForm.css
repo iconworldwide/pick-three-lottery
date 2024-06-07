@@ -49,17 +49,16 @@
   }
   
   .number-button {
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    max-height: 45px;
     background-color: #fff;
-    border: 2px solid #e9c46a;
-    border-radius: 50%;
+    border: 2px solid #222;
+    border-radius: 5px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: 'belligerent', sans-serif;
     font-size: 24px;
+    color: #222;
+    padding: 4px;
   }
   
   .number-button.selected {

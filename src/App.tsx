@@ -32,7 +32,7 @@ const AppContainer = styled.div`
 
 function App() {
   
-  const [lastDraw, setLastDraw] = useState<number[]>([9, 9, 9]);
+  const [lastDraw, setLastDraw] = useState<number[]>([]);
   const [coins, setCoins] = useState<number>(1824);
   const [userBets, setUserBets] = useState<{ numbers: number[], exactMatch: boolean }[]>([]);
   const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
