@@ -76,7 +76,6 @@ function App() {
     setLastDraw(newDraw);
     setIsLoading(false);
     setUserBets([]);
-    setIsDrawEnabled(false);
   };
 
   return (
