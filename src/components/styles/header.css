@@ -100,3 +100,15 @@
     background-color: #ccc;
   }
   
+.rolling-number {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+
+.number-container {
+  position: absolute;
+  top: 7px;
+  left: 9px;
+  animation: ease-in 0.5s linear;
+}

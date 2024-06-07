@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HelpPopup from './HelpPopup';
 import './styles/header.css';
 
@@ -8,17 +8,32 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ lastDraw }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [animatedNumbers, setAnimatedNumbers] = useState<number[]>([0, 0, 0]);
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
+  
+  useEffect(() => {
+    lastDraw.forEach((num, index) => {
+      setTimeout(() => {
+        setAnimatedNumbers((prev) => {
+          const newNumbers = [...prev];
+          newNumbers[index] = num;
+          return newNumbers;
+        });
+      }, index * 500); // Stagger the animations
+    });
+  }, [lastDraw]);
 
   return (
     <header>
       <div className="header-content">
         <span className='last-draw-title'>Last draw:</span>
-        {lastDraw.map((num, index) => (
-          <span key={index} className="draw-number">{num}</span>
+        {animatedNumbers.map((num, index) => (
+          <div key={index} className="draw-number rolling-number">
+            <div className="number-container">{num}</div>
+          </div>
         ))}
       </div>
       <button className='question-button' onClick={togglePopup}>?</button>
