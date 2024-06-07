@@ -11,10 +11,10 @@
     font-size: 54px;
     padding: 20px;
     color: #e9c46a;
+}
 
-    img {
-        width: 148px;
-        display: block;
-        margin: 0 auto;
-    }
+.coin-display img {
+    width: 146px;
+    display: block;
+    margin: 0 auto;
 }
