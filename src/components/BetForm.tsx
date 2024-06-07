@@ -2,37 +2,21 @@ import React, { useState } from 'react';
 import './styles/betForm.css';
 
 interface BetFormProps {
-  placeBet: (numbers: number[], exactMatch: boolean) => void;
-  disableBet: boolean;
+  numbers: number[];
+  exactMatch: boolean;
+  selectNumber: (position: number, num: number) => void;
+  toggleExactMatch: () => void;
 }
 
-const BetForm: React.FC<BetFormProps> = ({ placeBet, disableBet }) => {
-  const [numbers, setNumbers] = useState<number[]>([0, 0, 0]);
-  const [exactMatch, setExactMatch] = useState(true);
-
-  const selectNumber = (position: number, num: number) => {
-    const newNumbers = [...numbers];
-    newNumbers[position] = num;
-    setNumbers(newNumbers);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (numbers.every((num) => num !== null)) {
-      placeBet(numbers as number[], exactMatch);
-    } else {
-      alert('Please select a number for each position.');
-    }
-  };
-
+const BetForm: React.FC<BetFormProps> = ({ numbers, exactMatch, selectNumber, toggleExactMatch }) => {
   return (
-    <form onSubmit={handleSubmit} className="bet-form">
+    <div className="bet-form">
       <div className="play-type">
         <label className="checkbox-label">
           <input
             type="radio"
             checked={exactMatch}
-            onChange={() => setExactMatch(true)}
+            onChange={toggleExactMatch}
           />
           Exact
         </label>
@@ -40,7 +24,7 @@ const BetForm: React.FC<BetFormProps> = ({ placeBet, disableBet }) => {
           <input
             type="radio"
             checked={!exactMatch}
-            onChange={() => setExactMatch(false)}
+            onChange={toggleExactMatch}
           />
           Any
         </label>
@@ -52,9 +36,7 @@ const BetForm: React.FC<BetFormProps> = ({ placeBet, disableBet }) => {
               <button
                 key={num}
                 type="button"
-                className={`number-button ${
-                  numbers[position] === num ? 'selected' : ''
-                }`}
+                className={`number-button ${numbers[position] === num ? 'selected' : ''}`}
                 onClick={() => selectNumber(position, num)}
               >
                 {num}
@@ -63,10 +45,7 @@ const BetForm: React.FC<BetFormProps> = ({ placeBet, disableBet }) => {
           </div>
         ))}
       </div>
-      <button type="submit" disabled={disableBet} className="bet-button">
-        Bet
-      </button>
-    </form>
+    </div>
   );
 };
 

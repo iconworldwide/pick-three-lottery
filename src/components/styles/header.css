@@ -43,10 +43,9 @@
   }
 
   .last-draw-title {
-    font-size: 44px;
+    font-size: 24px;
     margin-right: 20px;
     color: #e9c46a;
-    font-size: 30px;
     display: block;
     padding-bottom: 10px;
     margin-left: 5px;
@@ -54,14 +53,14 @@
   
   .draw-number {
     margin: 0 5px;
-    font-size: 44px;
+    font-size: 24px;
     border: 2px solid #e9c46a;
     color: #e9c46a;
     border-radius: 29px;
     display: inline-block;
     text-align: center;
-    width: 54px;
-    height: 46px;
+    width: 34px;
+    height: 26px;
     padding-top: 8px;
   }
 

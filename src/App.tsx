@@ -13,7 +13,6 @@ import { useState } from "react";
 import CoinDisplay from "./components/CoinDisplay";
 import BetForm from "./components/BetForm";
 import DrawButton from "./components/DrawButton";
-import OverlayPopup from "./components/OverlayPopup";
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -38,21 +37,30 @@ function App() {
   const [userBets, setUserBets] = useState<{ numbers: number[], exactMatch: boolean }[]>([]);
   const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showOverlay, setShowOverlay] = useState<boolean>(false);
-  const [drawnNumbers, setDrawnNumbers] = useState<number[]>([]);
 
-  const placeBet = (numbers: number[], exactMatch: boolean) => {
-    setUserBets([...userBets, { numbers, exactMatch }]);
-    setIsDrawEnabled(true);
+  const [numbers, setNumbers] = useState<number[]>([]);
+  const [exactMatch, setExactMatch] = useState<boolean>(true);
+
+  const selectNumber = (position: number, num: number) => {
+    const newNumbers = [...numbers];
+    newNumbers[position] = num;
+    setNumbers(newNumbers);
+    if (newNumbers.every((n) => n !== null)) {
+      setIsDrawEnabled(true);
+    } else {
+      setIsDrawEnabled(false);
+    }
   };
+
+  const toggleExactMatch = () => {
+    setExactMatch(!exactMatch);
+  }
 
   const drawNumbers = async () => {
     setIsLoading(true);
-    setShowOverlay(true);
 
     // Simulate drawing numbers with a delay
     const newDraw = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
-    setDrawnNumbers(newDraw);
 
     // Check for winning numbers
     userBets.forEach(bet => {
@@ -71,10 +79,6 @@ function App() {
     setIsDrawEnabled(false);
   };
 
-  const closeOverlay = () => {
-    setShowOverlay(false);
-  };
-
   return (
     <StyledApp>
       <AppContainer>
@@ -82,9 +86,13 @@ function App() {
           <div className="container">
             <Header lastDraw={lastDraw} />
             <CoinDisplay coins={coins} />
-            <BetForm placeBet={placeBet} disableBet={isLoading || isDrawEnabled} />
-            <DrawButton drawNumbers={drawNumbers} isDisabled={!isDrawEnabled || isLoading} />
-            {showOverlay && <OverlayPopup numbers={drawnNumbers} onClose={closeOverlay} />}
+            <BetForm
+              numbers={numbers}
+              exactMatch={exactMatch}
+              selectNumber={selectNumber}
+              toggleExactMatch={toggleExactMatch}
+            />
+            <DrawButton drawNumbers={drawNumbers} isDisabled={isLoading} numbersSelected={isDrawEnabled} />    
           </div>
         </FlexBoxCol>
       </AppContainer>
