@@ -2,19 +2,19 @@
     display: block;
     margin: 0 auto;
     text-align: center;
-    gap: 20px;
     font-family: 'belligerent', sans-serif;
     background-color: rgba(20, 33, 61, 0.5);
     font-weight: bold;
     margin-bottom: 20px;
     font-family: 'belligerent', sans-serif;
-    font-size: 54px;
-    padding: 20px;
+    font-size: 36px;
+    padding: 10px;
     color: #e9c46a;
 }
 
 .coin-display img {
-    width: 146px;
+    width: 106px;
     display: block;
     margin: 0 auto;
+    margin-bottom: 10px;
 }
