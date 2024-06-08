@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ lastDraw }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [animatedNumbers, setAnimatedNumbers] = useState<number[]>([0, 0, 0]);
+  const [animatedNumbers, setAnimatedNumbers] = useState<number[]>([]);
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ lastDraw }) => {
           newNumbers[index] = num;
           return newNumbers;
         });
-      }, index * 500); // Stagger the animations
+      }, index * 1); // Stagger the animations
     });
   }, [lastDraw]);
 

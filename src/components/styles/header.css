@@ -3,6 +3,54 @@
   src: url("../../assets/fonts/belligerent.ttf");
 }
 
+.table-container {
+  max-width: 600px;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.table-title {
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+.section-title {
+  background-color: #e9c46a;
+  color: #222;
+  font-weight: bold;
+  text-align: left;
+}
+.row-title {
+  text-align: left;
+}
+.row-subtitle {
+  text-align: left;
+}
+
+.closeButton {
+  box-shadow: 5px 5px 10px 2px rgba(0,0,0, 0.8);
+  background-color: #e9c46a;
+  color: #222;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'belligerent', sans-serif;
+  font-size: 24px;
+  width: 90%;
+  border: none;
+  border-radius: 8px;
+}
+
 /* index.css or styles.css */
 .popup-overlay {
     position: fixed;
@@ -18,10 +66,13 @@
   }
   
   .popup-content {
-    background: white;
+    background: #222;
+    font-family: 'belligerent', sans-serif;
+    font-size: 20px;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
   header {
@@ -108,7 +159,7 @@
 
 .number-container {
   position: absolute;
-  top: 7px;
-  left: 9px;
+  top: 6px;
+  left: 10px;
   animation: ease-in 0.5s linear;
 }
