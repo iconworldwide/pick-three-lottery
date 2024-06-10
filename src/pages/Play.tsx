@@ -12,7 +12,7 @@ import BetForm from "../components/BetForm";
 import DrawButton from "../components/DrawButton";
 
 const StyledApp = styled.div`
-  background-color: #e8e8e8;
+  background-color: #222;
   color: black;
 
   @media (prefers-color-scheme: dark) {
