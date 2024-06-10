@@ -2,5 +2,5 @@
     background:linear-gradient(0deg, rgb(34, 34, 34, 0.3), rgb(34, 34, 34, 0.3)), url("src/assets/images/background-earn.png");
     background-size: cover;
     background-repeat: no-repeat;
-    height: calc(100vh - 63px);
+    height: calc(100vh - 63.7px);
 }

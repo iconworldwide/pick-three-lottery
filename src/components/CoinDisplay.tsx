@@ -26,7 +26,7 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins }) => {
       <span>${coins.toLocaleString('en-us', {minimumFractionDigits: 0})}</span>
       <div className='bottom-info-display'>
         <div>Level 1</div>
-        <div>${coins.toLocaleString('en-us', {minimumFractionDigits: 0})}/1,000,000</div>
+        <div>${coins.toLocaleString('en-us', {minimumFractionDigits: 0})}/10,000</div>
       </div>
       <ProgressBar progress={progress} level={level} />
     </div>
