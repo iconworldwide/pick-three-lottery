@@ -1191,7 +1191,7 @@ PERFORMANCE OF THIS SOFTWARE.
     background-color: #222;
     color: white;
   }
-  min-height: calc(100vh - 63px);
+  min-height: calc(100vh - 63.7px);
 `,fP=ii.div`
   max-width: 900px;
   margin: 0 auto;
