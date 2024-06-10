@@ -3,9 +3,57 @@ body {
 }
 
 .container {
-  background:linear-gradient(0deg, rgb(2, 48, 71, 0.3), rgb(2, 48, 71, 0.3)), url("./assets/images/background.png");
+  background: linear-gradient(0deg, rgb(34, 34, 34, 0.3), rgb(34, 34, 34, 0.3)), url("./assets/images/background.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+  height: calc(100vh - 63px);
+}
+
+/* TABS */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  font-family: 'belligerent', sans-serif;
+}
+
+.tab-content {
+  flex: 1;
+  background-color: #222; 
+  overflow-y: auto;
+}
+
+.tab-bar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #222;
+  border-top: 1px solid black;
+  padding: 10px 0;
+}
+
+.tab-link {
+  text-align: center;
+  color: #666;
+  text-decoration: none;
+  flex: 1;
+}
+
+.tab-link i {
+  display: block;
+  font-size: 24px;
+}
+
+.tab-link span {
+  display: block;
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.tab-link.active {
+  color: #e9c46a;
+}
+
+.tab-link.active i {
+  color: #e9c46a;
 }
