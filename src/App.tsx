@@ -40,7 +40,7 @@ function App() {
           <Router>
             <div className="app-container">
               <Routes>
-                <Route index path="/" element={<Home />} />
+                <Route index path="" element={<Home />} />
                 <Route path="/boost" element={<Boost />} />
                 <Route path="/earn" element={<Earn />} />
                 <Route path="/roadmap" element={<Roadmap />} />
