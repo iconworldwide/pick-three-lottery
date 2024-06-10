@@ -19,7 +19,7 @@ const StyledApp = styled.div`
     background-color: #222;
     color: white;
   }
-  min-height: calc(100vh - 63.7px);
+  min-height: 100vh;
 `;
 
 const AppContainer = styled.div`
@@ -38,7 +38,7 @@ function Play() {
   const [drawnNumbers, setDrawnNumbers] = useState<number[]>([]);
   const [numbers, setNumbers] = useState<number[]>([]);
   const [exactMatch, setExactMatch] = useState<boolean>(true);
-
+  const [exactMatchCount, setExactMatchCount] = useState<number>(0);
   const [tries, setTries] = useState<number>(100);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -48,12 +48,21 @@ function Play() {
     if (savedCoins !== null) {
       setCoins(Number(savedCoins));
     }
+
+    const savedExactMatchCount = localStorage.getItem('exactMatchCount');
+    if (savedExactMatchCount !== null) {
+      setExactMatchCount(Number(savedExactMatchCount));
+    }
   }, []);
 
   // Save balance to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('coins', coins.toString());
   }, [coins]);
+
+  useEffect(() => {
+    localStorage.setItem('exactMatchCount', exactMatchCount.toString());
+  }, [exactMatchCount]);
 
   useEffect(() => {
     if (tries < 100) {
@@ -122,6 +131,7 @@ function Play() {
       const exactMatches = calculateExactMatches(numbers, newDraw);
       if (exactMatches === 3) {
         winnings = 1500;
+        setExactMatchCount(prevCount => prevCount + 1);
       } else if (exactMatches === 2) {
         winnings = 1000;
       }
@@ -151,8 +161,8 @@ function Play() {
       <AppContainer>
         <FlexBoxCol>
           <div className="container">
+            <CoinDisplay coins={coins} exactMatchCount={exactMatchCount} />
             <Header lastDraw={lastDraw} />
-            <CoinDisplay coins={coins} />
             <BetForm
               numbers={numbers}
               exactMatch={exactMatch}

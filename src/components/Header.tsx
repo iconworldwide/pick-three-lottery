@@ -7,12 +7,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ lastDraw }) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [animatedNumbers, setAnimatedNumbers] = useState<number[]>([]);
-
-  const togglePopup = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
   
   useEffect(() => {
     lastDraw.forEach((num, index) => {
@@ -36,8 +31,6 @@ const Header: React.FC<HeaderProps> = ({ lastDraw }) => {
           </div>
         ))}
       </div>
-      <button className='question-button' onClick={togglePopup}>?</button>
-      {isPopupOpen && <HelpPopup onClose={togglePopup} />}
     </header>
   );
 };

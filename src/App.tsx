@@ -27,7 +27,7 @@ const StyledApp = styled.div`
     background-color: #222;
     color: white;
   }
-  min-height: 100vh;
+  min-height: calc(100vh - 63.7px);
 `;
 
 const AppContainer = styled.div`
@@ -36,13 +36,39 @@ const AppContainer = styled.div`
 `;
 
 function App() {
+  const [coins, setCoins] = useState<number>(() => {
+    const savedCoins = localStorage.getItem('coins');
+    return savedCoins ? parseInt(savedCoins) : 0;
+  });
+
+  const [drawsPerHour, setDrawsPerHour] = useState<number>(() => {
+    const savedDrawsPerHour = localStorage.getItem('drawsPerHour');
+    return savedDrawsPerHour ? parseInt(savedDrawsPerHour) : 10;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('coins', coins.toString());
+  }, [coins]);
+
+  useEffect(() => {
+    localStorage.setItem('drawsPerHour', drawsPerHour.toString());
+  }, [drawsPerHour]);
+
+  const updateCoins = (newCoins: number) => {
+    setCoins(newCoins);
+  };
+
+  const updateDrawsPerHour = (newDrawsPerHour: number) => {
+    setDrawsPerHour(newDrawsPerHour);
+  };
+
   return (
           <Router>
             <div className="app-container">
               <Routes>
                 <Route path="pick-three-lottery" element={<Navigate to="/" />} />
                 <Route path="/" element={<Home />} />
-                <Route path="/boost" element={<Boost />} />
+                <Route path="/boost" element={<Boost coins={coins} updateCoins={updateCoins} drawsPerHour={drawsPerHour} updateDrawsPerHour={updateDrawsPerHour} />}/>
                 <Route path="/earn" element={<Earn />} />
                 <Route path="/roadmap" element={<Roadmap />} />
               </Routes>

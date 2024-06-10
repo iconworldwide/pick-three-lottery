@@ -1,6 +1,79 @@
-.roadmap-container {
-    background:linear-gradient(0deg, rgb(34, 34, 34, 0.3), rgb(34, 34, 34, 0.3)), url("src/assets/images/background-map.png");
-    background-size: cover;
-    background-repeat: no-repeat;
+/* roadmap.css */
+.tab-content-roadmap {
+    background-color: #222;
+  }
+  
+  .roadmap-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
     height: calc(100vh - 63.7px);
-}
+  }
+  
+  .roadmap-title {
+    font-size: 36px;
+    color: #e9c46a;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .roadmap-steps {
+    width: 100%;
+  }
+  
+  .roadmap-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  
+  .step-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    width: 80%;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .step-content:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .completed .step-content {
+    background-color: #e0ffe0;
+    border-color: green;
+  }
+  
+  .step-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .step-description {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .step-connector {
+    width: 4px;
+    height: 40px;
+    background-color: #ddd;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .roadmap-step.completed + .roadmap-step .step-connector {
+    background-color: green;
+  }
+  
