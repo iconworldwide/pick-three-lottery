@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import CoinDisplay from "./components/CoinDisplay";
 import BetForm from "./components/BetForm";
 import DrawButton from "./components/DrawButton";
-import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, NavLink, Navigate } from 'react-router-dom';
 import Boost from "./pages/Boost";
 import Home from "./pages/Play";
 import Earn from "./pages/Earn";
@@ -40,7 +40,8 @@ function App() {
           <Router>
             <div className="app-container">
               <Routes>
-                <Route index path="" element={<Home />} />
+                <Route path="pick-three-lottery" element={<Navigate to="/" />} />
+                <Route path="/" element={<Home />} />
                 <Route path="/boost" element={<Boost />} />
                 <Route path="/earn" element={<Earn />} />
                 <Route path="/roadmap" element={<Roadmap />} />
