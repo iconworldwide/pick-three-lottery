@@ -3,11 +3,7 @@ body {
 }
 
 .container {
-  background: linear-gradient(0deg, rgb(34, 34, 34, 0.3), rgb(34, 34, 34, 0.3)), url("./assets/images/background.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: calc(100vh - 63px);
+  height: calc(100% - 63px);
 }
 
 /* TABS */
@@ -22,6 +18,11 @@ body {
   flex: 1;
   background-color: #222; 
   overflow-y: auto;
+
+  background: linear-gradient(0deg, rgb(34, 34, 34, 0.3), rgb(34, 34, 34, 0.3)), url(/src/assets/images/background.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .tab-bar {

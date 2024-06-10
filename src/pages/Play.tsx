@@ -19,7 +19,7 @@ const StyledApp = styled.div`
     background-color: #222;
     color: white;
   }
-  min-height: calc(100vh - 63px);
+  min-height: calc(100vh - 63.7px);
 `;
 
 const AppContainer = styled.div`
