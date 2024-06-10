@@ -3,6 +3,14 @@ import './styles/boost.css';
 import Godfather from '../assets/images/godfather.png';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 
+interface BoostItem {
+  icon: string;
+  text: string;
+  subtext: string;
+  level: number;
+  price: number;
+}
+
 interface BoostProps {
   coins: number;
   updateCoins: (newCoins: number) => void;
@@ -11,7 +19,7 @@ interface BoostProps {
 }
 
 const Boost: React.FC<BoostProps> = ({ coins, updateCoins, drawsPerHour, updateDrawsPerHour }) => {
-  const initialItems  = [
+  const initialItems: BoostItem[] = [
     { icon: '🎲', text: 'Gambling', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
     { icon: '💰', text: 'Ransom', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
     { icon: '🎁', text: 'Gifts', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
@@ -20,7 +28,7 @@ const Boost: React.FC<BoostProps> = ({ coins, updateCoins, drawsPerHour, updateD
     { icon: '💎', text: 'Diamonds', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
   ];
 
-  const [items, setItems] = useState(() => {
+  const [items, setItems] = useState<BoostItem[]>(() => {
     const savedItems = localStorage.getItem('boostItems');
     return savedItems ? JSON.parse(savedItems) : initialItems;
   });
