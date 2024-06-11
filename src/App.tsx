@@ -52,9 +52,9 @@ function App() {
               <Routes>
                 <Route path="/" element={<Navigate to="pick-three-lottery " />} />
                 <Route path="/pick-three-lottery" element={<Home />} />
-                <Route path="/boost" element={<Boost coins={coins} updateCoins={updateCoins} drawsPerHour={drawsPerHour} updateDrawsPerHour={updateDrawsPerHour} />}/>
-                <Route path="/earn" element={<Earn />} />
-                <Route path="/roadmap" element={<Roadmap />} />
+                <Route path="/pick-three-lottery/boost" element={<Boost coins={coins} updateCoins={updateCoins} drawsPerHour={drawsPerHour} updateDrawsPerHour={updateDrawsPerHour} />}/>
+                <Route path="/pick-three-lottery/earn" element={<Earn />} />
+                <Route path="/pick-three-lottery/roadmap" element={<Roadmap />} />
               </Routes>
               <nav className="tab-bar">
                 <NavLink to="/" className="tab-link">
