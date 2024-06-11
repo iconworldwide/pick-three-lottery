@@ -50,26 +50,28 @@ function App() {
           <Router>
             <div className="app-container">
               <Routes>
-                <Route path="/" element={<Navigate to="pick-three-lottery " />} />
-                <Route path="/pick-three-lottery" element={<Home />} />
+                <Route path="/" element={<Navigate to="/pick-three-lottery/play" />} />
+                <Route path="/pick-three-lottery" element={<Navigate to="/pick-three-lottery/play" />} />
+                <Route path="/pick-three-lottery/play" element={<Home />} />
+
                 <Route path="/pick-three-lottery/boost" element={<Boost coins={coins} updateCoins={updateCoins} drawsPerHour={drawsPerHour} updateDrawsPerHour={updateDrawsPerHour} />}/>
                 <Route path="/pick-three-lottery/earn" element={<Earn />} />
                 <Route path="/pick-three-lottery/roadmap" element={<Roadmap />} />
               </Routes>
               <nav className="tab-bar">
-                <NavLink to="/" className="tab-link">
+                <NavLink to="/pick-three-lottery/play" className="tab-link">
                   <i className="fas fa-gamepad"></i>
                   <span>Play</span>
                 </NavLink>
-                <NavLink to="/boost" className="tab-link">
+                <NavLink to="/pick-three-lottery/boost" className="tab-link">
                   <i className="fas fa-rocket"></i>
                   <span>Boost</span>
                 </NavLink>
-                <NavLink to="/earn" className="tab-link">
+                <NavLink to="/pick-three-lottery/earn" className="tab-link">
                   <i className="fas fa-coins"></i>
                   <span>Earn</span>
                 </NavLink>
-                <NavLink to="/roadmap" className="tab-link">
+                <NavLink to="/pick-three-lottery/roadmap" className="tab-link">
                   <i className="fas fa-globe-americas"></i>
                   <span>Roadmap</span>
                 </NavLink>
