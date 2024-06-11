@@ -3,11 +3,11 @@ import './styles/earn.css'
 import CoinImage from '../assets/images/coin.png'; // Adjust the path as necessary
 
 const tasks = [
-  { logo: '🎯', title: 'Complete Survey', prize: '$100k' },
-  { logo: '🏆', title: 'Follow us on Telegram', prize: '$500k' },
-  { logo: '🎲', title: 'Follow us on X', prize: '$200k' },
-  { logo: '💬', title: 'Refer a Friend', prize: '$300k' },
-  { logo: '📈', title: 'Reach Level 10', prize: '$100k' },
+  { logo: '🎯', title: 'Connect your TON wallet', prize: '$500k' },
+  { logo: '🏆', title: 'Follow us on Telegram', prize: '$50k' },
+  { logo: '🎲', title: 'Follow us on X', prize: '$50k' },
+  { logo: '💬', title: 'Refer a Friend', prize: '$200k' },
+  { logo: '📈', title: 'Reach Level 10', prize: '$100m' },
   { logo: '🎁', title: 'Daily Login', prize: '$50k' },
 ];
 

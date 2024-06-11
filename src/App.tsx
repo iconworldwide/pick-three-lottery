@@ -19,22 +19,6 @@ import Home from "./pages/Play";
 import Earn from "./pages/Earn";
 import Roadmap from "./pages/Roadmap";
 
-const StyledApp = styled.div`
-  background-color: #e8e8e8;
-  color: black;
-
-  @media (prefers-color-scheme: dark) {
-    background-color: #222;
-    color: white;
-  }
-  min-height: calc(100vh - 63.7px);
-`;
-
-const AppContainer = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-`;
-
 function App() {
   const [coins, setCoins] = useState<number>(() => {
     const savedCoins = localStorage.getItem('coins');
@@ -66,8 +50,8 @@ function App() {
           <Router>
             <div className="app-container">
               <Routes>
-                <Route path="pick-three-lottery" element={<Navigate to="/" />} />
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Navigate to="pick-three-lottery " />} />
+                <Route path="/pick-three-lottery" element={<Home />} />
                 <Route path="/boost" element={<Boost coins={coins} updateCoins={updateCoins} drawsPerHour={drawsPerHour} updateDrawsPerHour={updateDrawsPerHour} />}/>
                 <Route path="/earn" element={<Earn />} />
                 <Route path="/roadmap" element={<Roadmap />} />
