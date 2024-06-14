@@ -57,3 +57,20 @@ body {
 .tab-link.active i {
   color: #e9c46a;
 }
+
+.autodraw-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.autodraw-label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.autodraw-switch {
+  width: 20px;
+  height: 20px;
+}

@@ -1,8 +1,5 @@
 import "./App.css";
 import { TonConnectButton } from "@tonconnect/ui-react";
-import { Counter } from "./components/Counter";
-import { Jetton } from "./components/Jetton";
-import { TransferTon } from "./components/TransferTon";
 import styled from "styled-components";
 import { Button, FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
@@ -15,69 +12,60 @@ import BetForm from "./components/BetForm";
 import DrawButton from "./components/DrawButton";
 import { BrowserRouter as Router, Route, Routes, NavLink, Navigate } from 'react-router-dom';
 import Boost from "./pages/Boost";
-import Home from "./pages/Play";
+import Play from "./pages/Play";
 import Earn from "./pages/Earn";
 import Roadmap from "./pages/Roadmap";
+import Onboarding from './pages/Onboarding';
+import { GameProvider } from './context/GameContext';
 
 function App() {
-  const [coins, setCoins] = useState<number>(() => {
-    const savedCoins = localStorage.getItem('coins');
-    return savedCoins ? parseInt(savedCoins) : 0;
+  const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
+    const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+    return onboardingCompleted === 'true';
   });
 
-  const [drawsPerHour, setDrawsPerHour] = useState<number>(() => {
-    const savedDrawsPerHour = localStorage.getItem('drawsPerHour');
-    return savedDrawsPerHour ? parseInt(savedDrawsPerHour) : 10;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('coins', coins.toString());
-  }, [coins]);
-
-  useEffect(() => {
-    localStorage.setItem('drawsPerHour', drawsPerHour.toString());
-  }, [drawsPerHour]);
-
-  const updateCoins = (newCoins: number) => {
-    setCoins(newCoins);
+  const handleOnboardingComplete = () => {
+    setIsOnboardingComplete(true);
+    localStorage.setItem('onboardingCompleted', 'true');
   };
 
-  const updateDrawsPerHour = (newDrawsPerHour: number) => {
-    setDrawsPerHour(newDrawsPerHour);
-  };
+  if (!isOnboardingComplete) {
+    return <Onboarding onComplete={handleOnboardingComplete} />;
+  }
 
   return (
-          <Router>
-            <div className="app-container">
-              <Routes>
-                <Route path="/" element={<Navigate to="/pick-three-lottery/play" />} />
-                <Route path="/pick-three-lottery" element={<Navigate to="/pick-three-lottery/play" />} />
-                <Route path="/pick-three-lottery/play" element={<Home />} />
-
-                <Route path="/pick-three-lottery/boost" element={<Boost coins={coins} updateCoins={updateCoins} drawsPerHour={drawsPerHour} updateDrawsPerHour={updateDrawsPerHour} />}/>
-                <Route path="/pick-three-lottery/earn" element={<Earn />} />
-                <Route path="/pick-three-lottery/roadmap" element={<Roadmap />} />
-              </Routes>
-              <nav className="tab-bar">
-                <NavLink to="/pick-three-lottery/play" className="tab-link">
-                  <i className="fas fa-gamepad"></i>
-                  <span>Play</span>
-                </NavLink>
-                <NavLink to="/pick-three-lottery/boost" className="tab-link">
-                  <i className="fas fa-rocket"></i>
-                  <span>Boost</span>
-                </NavLink>
-                <NavLink to="/pick-three-lottery/earn" className="tab-link">
-                  <i className="fas fa-coins"></i>
-                  <span>Earn</span>
-                </NavLink>
-                <NavLink to="/pick-three-lottery/roadmap" className="tab-link">
-                  <i className="fas fa-globe-americas"></i>
-                  <span>Roadmap</span>
-                </NavLink>
-              </nav>
-            </div>
-    </Router>
+    <GameProvider>
+      <Router>
+        <div className="app-container">
+          <Routes>
+            <Route path="/" element={<Navigate to="/pick-three-lottery/play" />} />
+            <Route path="/pick-three-lottery" element={<Navigate to="/pick-three-lottery/play" />} />
+            <Route path="/pick-three-lottery/play" element={<Play />} />
+            <Route path="/pick-three-lottery/boost" element={<Boost />} />
+            <Route path="/pick-three-lottery/earn" element={<Earn />} />
+            <Route path="/pick-three-lottery/roadmap" element={<Roadmap />} />
+          </Routes>
+          <nav className="tab-bar">
+            <NavLink to="/pick-three-lottery/play" className="tab-link">
+              <i className="fas fa-gamepad"></i>
+              <span>Play</span>
+            </NavLink>
+            <NavLink to="/pick-three-lottery/boost" className="tab-link">
+              <i className="fas fa-rocket"></i>
+              <span>Boost</span>
+            </NavLink>
+            <NavLink to="/pick-three-lottery/earn" className="tab-link">
+              <i className="fas fa-coins"></i>
+              <span>Earn</span>
+            </NavLink>
+            <NavLink to="/pick-three-lottery/roadmap" className="tab-link">
+              <i className="fas fa-globe-americas"></i>
+              <span>Roadmap</span>
+            </NavLink>
+          </nav>
+        </div>
+      </Router>
+    </GameProvider>
   );
 }
 

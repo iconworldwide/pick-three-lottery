@@ -1,15 +1,11 @@
 import "../App.css";
-import { TonConnectButton } from "@tonconnect/ui-react";
 import styled from "styled-components";
-import { Button, FlexBoxCol, FlexBoxRow } from "../components/styled/styled";
-import { useTonConnect } from "../hooks/useTonConnect";
-import { CHAIN } from "@tonconnect/protocol";
-import "@twa-dev/sdk";
 import Header from "../components/Header";
 import { useEffect, useRef, useState } from "react";
 import CoinDisplay from "../components/CoinDisplay";
 import BetForm from "../components/BetForm";
 import DrawButton from "../components/DrawButton";
+import { UseGameContext } from '../context/GameContext';
 
 const StyledApp = styled.div`
   background-color: #222;
@@ -28,9 +24,8 @@ const AppContainer = styled.div`
 `;
 
 function Play() {
-  
+  const { coins, autoDraws, setAutoDraws, addCoins, deductAutoDraws } = UseGameContext();
   const [lastDraw, setLastDraw] = useState<number[]>([0, 0, 0]);
-  const [coins, setCoins] = useState<number>(0);
   const [userBets, setUserBets] = useState<{ numbers: number[], exactMatch: boolean }[]>([]);
   const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,23 +37,20 @@ function Play() {
   const [tries, setTries] = useState<number>(100);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [isAutoDraw, setIsAutoDraw] = useState<boolean>(false);
+
   // Load balance from localStorage when the app initializes
   useEffect(() => {
-    const savedCoins = localStorage.getItem('coins');
-    if (savedCoins !== null) {
-      setCoins(Number(savedCoins));
-    }
-
     const savedExactMatchCount = localStorage.getItem('exactMatchCount');
     if (savedExactMatchCount !== null) {
       setExactMatchCount(Number(savedExactMatchCount));
     }
-  }, []);
 
-  // Save balance to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('coins', coins.toString());
-  }, [coins]);
+    const savedAutoDraws = localStorage.getItem('autoDraws');
+    if (savedAutoDraws !== null) {
+      setAutoDraws(Number(savedAutoDraws));
+    }
+  }, [setAutoDraws]);
 
   useEffect(() => {
     localStorage.setItem('exactMatchCount', exactMatchCount.toString());
@@ -93,7 +85,7 @@ function Play() {
 
   const toggleExactMatch = () => {
     setExactMatch(!exactMatch);
-  }
+  };
 
   const calculateExactMatches = (userNumbers: number[], drawnNumbers: number[]): number => {
     let matchCount = 0;
@@ -118,9 +110,7 @@ function Play() {
     return matchCount;
   };
 
-  const drawNumbers = async () => {
-    setIsLoading(true);
-
+  const performDraw = async () => {
     // Simulate drawing numbers with a delay
     const newDraw = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
     setDrawnNumbers(newDraw);
@@ -145,23 +135,39 @@ function Play() {
     }
 
     setLastDraw(newDraw);
-    setCoins(coins + winnings);
+    addCoins(winnings); // Ensure coins are updated correctly
+  };
+
+  const drawNumbers = async () => {
+    setIsLoading(true);
+
+    if (isAutoDraw) {
+      for (let i = 0; i < autoDraws; i++) {
+        if (autoDraws > 0) {
+          await performDraw();
+          deductAutoDraws();
+          await new Promise(resolve => setTimeout(resolve, 1)); // Wait 1 second between draws
+        }
+      }
+    } else {
+      await performDraw();
+      setTries(prevTries => prevTries - 1);
+    }
+
     setIsLoading(false);
     setUserBets([]);
   };
 
   const handleDraw = () => {
-    if (tries <= 0) return;
+    if (tries <= 0 && !isAutoDraw) return;
     drawNumbers();
-    setTries(prevTries => prevTries - 1);
   };
-  
+
   return (
     <StyledApp className="tab-content">
       <AppContainer>
-        <FlexBoxCol>
           <div className="container">
-            <CoinDisplay coins={coins} exactMatchCount={exactMatchCount} />
+            <CoinDisplay coins={coins} exactMatchCount={exactMatchCount} autoDrawsPerHour={autoDraws} />
             <Header lastDraw={lastDraw} />
             <BetForm
               numbers={numbers}
@@ -169,15 +175,24 @@ function Play() {
               selectNumber={selectNumber}
               toggleExactMatch={toggleExactMatch}
             />
+            <div className="autodraw-container">
+              <label className="autodraw-label">Autodraw</label>
+              <input
+                type="checkbox"
+                checked={isAutoDraw}
+                onChange={() => setIsAutoDraw(!isAutoDraw)}
+                className="autodraw-switch"
+              />
+            </div>
             <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDrawEnabled} />
             <div className="status">
-                <label>Tries Remaining: {tries} / 100</label>
+              <label>Draws: {tries}/100</label>
+              <label>Auto draws: {autoDraws}</label>
             </div>
           </div>
-        </FlexBoxCol>
       </AppContainer>
     </StyledApp>
   );
 }
 
-export default Play;  
+export default Play;

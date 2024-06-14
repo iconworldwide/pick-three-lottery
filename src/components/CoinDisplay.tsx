@@ -7,9 +7,10 @@ import HelpPopup from './HelpPopup';
 interface CoinDisplayProps {
   coins: number;
   exactMatchCount: number;
+  autoDrawsPerHour: number;
 }
 
-const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins, exactMatchCount }) => {
+const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins, exactMatchCount, autoDrawsPerHour }) => {
   const [level, setLevel] = useState<number>(1);
   const [progress, setProgress] = useState<number>(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -17,7 +18,6 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins, exactMatchCount }) => 
   useEffect(() => {
     setProgress(100*(coins/10000));
   }, [coins]);
-
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -27,7 +27,7 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins, exactMatchCount }) => 
     <div className="coin-display">
       <div className='top-info-display'>
         <div>Exact matches: {exactMatchCount}</div>
-        <div>Auto draws per hour: 10</div>
+        <div>Auto draws per hour: {autoDrawsPerHour}</div>
       </div>
       <img src={coin} alt="Coin" />
       <span>${coins.toLocaleString('en-us', {minimumFractionDigits: 0})}</span>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './styles/boost.css';
 import Godfather from '../assets/images/godfather.png';
 import ConfirmationDialog from '../components/ConfirmationDialog';
+import { UseGameContext } from '../context/GameContext';
 
 interface BoostItem {
   icon: string;
@@ -11,21 +12,16 @@ interface BoostItem {
   price: number;
 }
 
-interface BoostProps {
-  coins: number;
-  updateCoins: (newCoins: number) => void;
-  drawsPerHour: number;
-  updateDrawsPerHour: (newDrawsPerHour: number) => void;
-}
 
-const Boost: React.FC<BoostProps> = ({ coins, updateCoins, drawsPerHour, updateDrawsPerHour }) => {
+const Boost: React.FC = () => {
+  const { coins, autoDraws, addCoins } = UseGameContext();
   const initialItems: BoostItem[] = [
-    { icon: '🎲', text: 'Gambling', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
-    { icon: '💰', text: 'Ransom', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
-    { icon: '🎁', text: 'Gifts', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
-    { icon: '🍕', text: 'Pizza', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
-    { icon: '🏆', text: 'Prizes', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
-    { icon: '💎', text: 'Diamonds', subtext: 'Increase auto draws per day by 10', level: 1, price: 10000 },
+    { icon: '🎲', text: 'Gambling', subtext: 'Increase bonus draws per hour by 10', level: 1, price: 10000 },
+    { icon: '💰', text: 'Ransom', subtext: 'Increase bonus draws per hour by 10', level: 1, price: 10000 },
+    { icon: '🎁', text: 'Gifts', subtext: 'Increase bonus draws per hour by 10', level: 1, price: 10000 },
+    { icon: '🍕', text: 'Pizza', subtext: 'Increase bonus draws per hour by 10', level: 1, price: 10000 },
+    { icon: '🏆', text: 'Prizes', subtext: 'Increase bonus draws per hour by 10', level: 1, price: 10000 },
+    { icon: '💎', text: 'Diamonds', subtext: 'Increase bonus draws per hour by 10', level: 1, price: 10000 },
   ];
 
   const [items, setItems] = useState<BoostItem[]>(() => {
@@ -39,17 +35,6 @@ const Boost: React.FC<BoostProps> = ({ coins, updateCoins, drawsPerHour, updateD
   useEffect(() => {
     localStorage.setItem('boostItems', JSON.stringify(items));
   }, [items]);
-
-  useEffect(() => {
-    const savedDrawsPerHour = localStorage.getItem('drawsPerHour');
-    if (savedDrawsPerHour) {
-      updateDrawsPerHour(parseInt(savedDrawsPerHour));
-    }
-  }, [updateDrawsPerHour]);
-
-  useEffect(() => {
-    localStorage.setItem('drawsPerHour', drawsPerHour.toString());
-  }, [drawsPerHour]);
 
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
@@ -67,8 +52,7 @@ const Boost: React.FC<BoostProps> = ({ coins, updateCoins, drawsPerHour, updateD
       };
 
       setItems(newItems);
-      updateCoins(coins - items[selectedItem].price);
-      updateDrawsPerHour(drawsPerHour + 10);
+      addCoins(-items[selectedItem].price); // Deduct coins      
       setIsDialogVisible(false);
     } else {
       alert('Not enough coins to purchase the boost!');
@@ -85,7 +69,7 @@ const Boost: React.FC<BoostProps> = ({ coins, updateCoins, drawsPerHour, updateD
     <div className="tab-content-boost">
       <div className="boost-container">
       <div className="boost-header">
-          <span className="boost-label">Auto Draws per Hour: {drawsPerHour}</span>
+          <span className="boost-label">Bonus Draws per Hour: 50</span>
           <span className="boost-label">Coins: ${coins.toLocaleString()}</span>
         </div>
         <div className="boost-image">
