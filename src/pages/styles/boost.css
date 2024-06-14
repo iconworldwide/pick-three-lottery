@@ -21,6 +21,7 @@
   .boost-label {
     font-size: 16px;
     font-weight: bold;
+    color: #e9c46a;
   }
   
   .boost-image img {
@@ -73,4 +74,34 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
+  }
+
+  .claim-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'belligerent', sans-serif;
+    font-size: 24px;
+    width: 90%;
+    border: none;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0, 0.8);
+    background-color: #e9c46a;
+    color: #222;
+    outline: none;
+    border: 2px solid #e9c46a;
+    margin-bottom: 20px;
+  }
+
+  .claim-button:active { 
+    border-style: outset;
+  }
+
+  .boost-labels-conainer {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
   }

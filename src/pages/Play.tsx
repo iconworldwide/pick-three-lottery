@@ -24,7 +24,7 @@ const AppContainer = styled.div`
 `;
 
 function Play() {
-  const { coins, autoDraws, setAutoDraws, addCoins, deductAutoDraws } = UseGameContext();
+  const { coins, bonusDraws, bonusDrawsPerHour, setBonusDraws, addCoins, deductBonusDraws } = UseGameContext();
   const [lastDraw, setLastDraw] = useState<number[]>([0, 0, 0]);
   const [userBets, setUserBets] = useState<{ numbers: number[], exactMatch: boolean }[]>([]);
   const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
@@ -37,7 +37,7 @@ function Play() {
   const [tries, setTries] = useState<number>(100);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const [isAutoDraw, setIsAutoDraw] = useState<boolean>(false);
+  const [isBonusDraw, setIsBonusDraw] = useState<boolean>(false);
 
   // Load balance from localStorage when the app initializes
   useEffect(() => {
@@ -46,11 +46,11 @@ function Play() {
       setExactMatchCount(Number(savedExactMatchCount));
     }
 
-    const savedAutoDraws = localStorage.getItem('autoDraws');
-    if (savedAutoDraws !== null) {
-      setAutoDraws(Number(savedAutoDraws));
+    const savedBonusDraws = localStorage.getItem('bonusDraws');
+    if (savedBonusDraws !== null) {
+      setBonusDraws(Number(savedBonusDraws));
     }
-  }, [setAutoDraws]);
+  }, [setBonusDraws]);
 
   useEffect(() => {
     localStorage.setItem('exactMatchCount', exactMatchCount.toString());
@@ -141,11 +141,11 @@ function Play() {
   const drawNumbers = async () => {
     setIsLoading(true);
 
-    if (isAutoDraw) {
-      for (let i = 0; i < autoDraws; i++) {
-        if (autoDraws > 0) {
+    if (isBonusDraw) {
+      for (let i = 0; i < bonusDraws; i++) {
+        if (bonusDraws > 0) {
           await performDraw();
-          deductAutoDraws();
+          deductBonusDraws();
           await new Promise(resolve => setTimeout(resolve, 1)); // Wait 1 second between draws
         }
       }
@@ -159,37 +159,37 @@ function Play() {
   };
 
   const handleDraw = () => {
-    if (tries <= 0 && !isAutoDraw) return;
+    if (tries <= 0 && !isBonusDraw) return;
     drawNumbers();
   };
 
   return (
     <StyledApp className="tab-content">
       <AppContainer>
-          <div className="container">
-            <CoinDisplay coins={coins} exactMatchCount={exactMatchCount} autoDrawsPerHour={autoDraws} />
-            <Header lastDraw={lastDraw} />
-            <BetForm
-              numbers={numbers}
-              exactMatch={exactMatch}
-              selectNumber={selectNumber}
-              toggleExactMatch={toggleExactMatch}
+        <div className="container">
+          <CoinDisplay coins={coins} exactMatchCount={exactMatchCount} bonusDrawsPerHour={bonusDrawsPerHour} />
+          <Header lastDraw={lastDraw} />
+          <BetForm
+            numbers={numbers}
+            exactMatch={exactMatch}
+            selectNumber={selectNumber}
+            toggleExactMatch={toggleExactMatch}
+          />
+          <div className="autodraw-container">
+            <label className="autodraw-label">Bonus draw mode</label>
+            <input
+              type="checkbox"
+              checked={isBonusDraw}
+              onChange={() => setIsBonusDraw(!isBonusDraw)}
+              className="autodraw-switch"
             />
-            <div className="autodraw-container">
-              <label className="autodraw-label">Autodraw</label>
-              <input
-                type="checkbox"
-                checked={isAutoDraw}
-                onChange={() => setIsAutoDraw(!isAutoDraw)}
-                className="autodraw-switch"
-              />
-            </div>
-            <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDrawEnabled} />
-            <div className="status">
-              <label>Draws: {tries}/100</label>
-              <label>Auto draws: {autoDraws}</label>
-            </div>
           </div>
+          <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDrawEnabled} />
+          <div className="status">
+            <label>Draws: {tries}/100</label>
+            <label>Bonus draws: {bonusDraws}</label>
+          </div>
+        </div>
       </AppContainer>
     </StyledApp>
   );

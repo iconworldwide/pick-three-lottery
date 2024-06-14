@@ -12,9 +12,12 @@ interface BoostItem {
   price: number;
 }
 
-
 const Boost: React.FC = () => {
-  const { coins, autoDraws, addCoins } = UseGameContext();
+  const {
+    coins, bonusDrawsPerHour, claimableBonusDraws, bonusDraws, addCoins,
+    setBonusDrawsPerHour, claimBonusDraws, addBonusDraws
+  } = UseGameContext();
+
   const initialItems: BoostItem[] = [
     { icon: '🎲', text: 'Gambling', subtext: 'Increase bonus draws per hour by 10', level: 1, price: 10000 },
     { icon: '💰', text: 'Ransom', subtext: 'Increase bonus draws per hour by 10', level: 1, price: 10000 },
@@ -42,7 +45,6 @@ const Boost: React.FC = () => {
   };
 
   const handleConfirm = () => {
-    // setIsDialogVisible(false);
     if (selectedItem !== null && coins >= items[selectedItem].price) {
       const newItems = [...items];
       newItems[selectedItem] = {
@@ -52,7 +54,10 @@ const Boost: React.FC = () => {
       };
 
       setItems(newItems);
-      addCoins(-items[selectedItem].price); // Deduct coins      
+      addCoins(-items[selectedItem].price); // Deduct coins
+      setBonusDrawsPerHour(bonusDrawsPerHour + 10); // Increase bonus draws per hour
+      // setClaimableBonusDraws(claimableBonusDraws + 10); // Add the new bonus draws to claimable bonus draws
+      addBonusDraws(10);
       setIsDialogVisible(false);
     } else {
       alert('Not enough coins to purchase the boost!');
@@ -68,13 +73,21 @@ const Boost: React.FC = () => {
   return (
     <div className="tab-content-boost">
       <div className="boost-container">
-      <div className="boost-header">
-          <span className="boost-label">Bonus Draws per Hour: 50</span>
+        <div className="boost-header">
+          <span className="boost-label">Bonus Draws per Hour: {bonusDrawsPerHour}</span>
           <span className="boost-label">Coins: ${coins.toLocaleString()}</span>
         </div>
         <div className="boost-image">
           <img src={Godfather} alt="Godfather" />
         </div>
+        <div className='boost-labels-conainer'>
+          <div className="boost-label">Draws to Claim: {claimableBonusDraws}</div>
+          <div className="boost-label">Bonus Draws: {bonusDraws}</div>
+        </div>
+        <button
+          className="claim-button"
+          onClick={claimBonusDraws}
+          disabled={claimableBonusDraws === 0}>Claim Bonus Draws</button>
         <div className="boost-items">
           {items.map((item, index) => (
             <div key={index} className="boost-item" onClick={() => handleItemClick(index)}>
