@@ -24,7 +24,7 @@ const AppContainer = styled.div`
 `;
 
 function Play() {
-  const { coins, bonusDraws, bonusDrawsPerHour, setBonusDraws, addCoins, deductBonusDraws } = UseGameContext();
+  const { coins, bonusDraws, level, bonusDrawsPerHour, tries, maxTries, setBonusDraws, addCoins, deductBonusDraws, updateTries } = UseGameContext();
   const [lastDraw, setLastDraw] = useState<number[]>([0, 0, 0]);
   const [userBets, setUserBets] = useState<{ numbers: number[], exactMatch: boolean }[]>([]);
   const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
@@ -34,7 +34,6 @@ function Play() {
   const [numbers, setNumbers] = useState<number[]>([]);
   const [exactMatch, setExactMatch] = useState<boolean>(true);
   const [exactMatchCount, setExactMatchCount] = useState<number>(0);
-  const [tries, setTries] = useState<number>(100);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const [isBonusDraw, setIsBonusDraw] = useState<boolean>(false);
@@ -57,9 +56,9 @@ function Play() {
   }, [exactMatchCount]);
 
   useEffect(() => {
-    if (tries < 100) {
+    if (tries < maxTries) {
       intervalRef.current = setInterval(() => {
-        setTries(prevTries => Math.min(prevTries + 1, 100));
+        updateTries(true);
       }, 1000);
     } else if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -70,7 +69,7 @@ function Play() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [tries]);
+  }, [tries, maxTries]);
 
   const selectNumber = (position: number, num: number) => {
     const newNumbers = [...numbers];
@@ -151,7 +150,7 @@ function Play() {
       }
     } else {
       await performDraw();
-      setTries(prevTries => prevTries - 1);
+      updateTries(false);
     }
 
     setIsLoading(false);
@@ -167,7 +166,7 @@ function Play() {
     <StyledApp className="tab-content">
       <AppContainer>
         <div className="container">
-          <CoinDisplay coins={coins} exactMatchCount={exactMatchCount} bonusDrawsPerHour={bonusDrawsPerHour} />
+          <CoinDisplay coins={coins} exactMatchCount={exactMatchCount} bonusDrawsPerHour={bonusDrawsPerHour} level={level} />
           <Header lastDraw={lastDraw} />
           <BetForm
             numbers={numbers}
@@ -186,7 +185,7 @@ function Play() {
           </div>
           <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDrawEnabled} />
           <div className="status">
-            <label>Draws: {tries}/100</label>
+            <label>Draws: {tries}/{maxTries}</label>
             <label>Bonus draws: {bonusDraws}</label>
           </div>
         </div>

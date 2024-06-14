@@ -8,16 +8,17 @@ interface CoinDisplayProps {
   coins: number;
   exactMatchCount: number;
   bonusDrawsPerHour: number;
+  level: number;
 }
 
-const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins, exactMatchCount, bonusDrawsPerHour }) => {
-  const [level, setLevel] = useState<number>(1);
+const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins, exactMatchCount, bonusDrawsPerHour, level }) => {
   const [progress, setProgress] = useState<number>(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
-    setProgress(100*(coins/10000));
-  }, [coins]);
+    const coinsForNextLevel = 10000 * Math.pow(2, level - 1);
+    setProgress(100 * (coins / coinsForNextLevel));
+  }, [coins, level]);
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -27,14 +28,15 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ coins, exactMatchCount, bonus
     <div className="coin-display">
       <div className='top-info-display'>
         <div>Exact matches: {exactMatchCount}</div>
-        <div>Auto draws per hour: {bonusDrawsPerHour}</div>
+        <div>Bonus draws per hour: {bonusDrawsPerHour}</div>
       </div>
       <img src={coin} alt="Coin" />
-      <span>${coins.toLocaleString('en-us', {minimumFractionDigits: 0})}</span>
+      <span>${coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}</span>
       <div className='bottom-info-display'>
-        <div>Level 1<button className='question-button' onClick={togglePopup}>?</button></div>
+        <div>Level {level}<button className='question-button' onClick={togglePopup}>?</button></div>
         {isPopupOpen && <HelpPopup onClose={togglePopup} />}
-        <div>${coins.toLocaleString('en-us', {minimumFractionDigits: 0})}/10,000</div>
+        <div>${coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}/
+          {Math.floor(10000 * Math.pow(2, level - 1)).toLocaleString('en-us', { minimumFractionDigits: 0 })}</div>
       </div>
       <ProgressBar progress={progress} level={level} />
     </div>

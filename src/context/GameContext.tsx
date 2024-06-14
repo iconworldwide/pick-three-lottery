@@ -6,13 +6,18 @@ interface GameContextProps {
   bonusDrawsPerHour: number;
   bonusDraws: number;
   claimableBonusDraws: number;
+  maxTries: number;
+  tries: number;
   setCoins: (coins: number) => void;
   setLevel: (level: number) => void;
   setBonusDrawsPerHour: (bonusDrawsPerHour: number) => void;
   setBonusDraws: (bonusDraws: number) => void;
   setClaimableBonusDraws: (claimableBonusDraws: number) => void;
+  setTries: (tries: number) => void;
+  setMaxTries: (maxTries: number) => void;
   addCoins: (amount: number) => void;
   deductBonusDraws: () => void;
+  updateTries: (increase: boolean) => void;
   claimBonusDraws: () => void;
   addBonusDraws: (amount: number) => void;
 }
@@ -46,6 +51,16 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [bonusDraws, setBonusDraws] = useState<number>(() => {
     const savedBonusDraws = localStorage.getItem('bonusDraws');
     return savedBonusDraws ? parseInt(savedBonusDraws) : 0;
+  });
+
+  const [tries, setTries] = useState<number>(() => {
+    const savedTries = localStorage.getItem('tries');
+    return savedTries ? parseInt(savedTries) : 100;
+  });
+
+  const [maxTries, setMaxTries] = useState<number>(() => {
+    const savedMaxTries = localStorage.getItem('maxTries');
+    return savedMaxTries ? parseInt(savedMaxTries) : 100;
   });
 
   const savedClaimableBonusDraws = localStorage.getItem('claimableBonusDraws');
@@ -85,15 +100,42 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.setItem('lastClaimedTime', lastClaimedTimeState.toString());
   }, [lastClaimedTimeState]);
 
+  useEffect(() => {
+    localStorage.setItem('tries', tries.toString());
+  }, [tries]);
+
+  useEffect(() => {
+    localStorage.setItem('maxTries', maxTries.toString());
+  }, [maxTries]);
+
   const deductBonusDraws = () => {
     setBonusDraws(prevBonusDraws => (prevBonusDraws > 0 ? prevBonusDraws - 1 : 0));
   };
 
+  const updateTries = (increase: boolean) => {
+    if (increase) {
+      setTries(prevTries => Math.min(prevTries + 1, maxTries));
+    } else {
+      setTries(prevTries => prevTries - 1);
+    }
+  }
+
   const addCoins = (amount: number) => {
     setCoins(prevCoins => {
-      const newCoins = prevCoins + amount;
-      const newLevel = Math.floor(newCoins / 10000) + 1;
-      setLevel(newLevel);
+      let newCoins = prevCoins + amount;
+      let newLevel = level;
+      let coinsForNextLevel = 10000 * Math.pow(2, level - 1);
+      while (newCoins >= coinsForNextLevel) {
+        newCoins -= coinsForNextLevel;
+        newLevel += 1;
+        coinsForNextLevel = 10000 * Math.pow(2, newLevel - 1);
+      }
+      if (newLevel > level) {
+        const levelUp = newLevel - level;
+        setLevel(newLevel);
+        setMaxTries(prevMaxTries => prevMaxTries + ((newLevel - level) * 100));
+      }
+
       return newCoins;
     });
   };
@@ -123,9 +165,9 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   return (
     <GameContext.Provider value={{
-      coins, level, bonusDrawsPerHour, bonusDraws, claimableBonusDraws, setCoins,
-      setLevel, setBonusDrawsPerHour, setBonusDraws, setClaimableBonusDraws,
-      addCoins, deductBonusDraws, claimBonusDraws, addBonusDraws
+      coins, level, bonusDrawsPerHour, bonusDraws, claimableBonusDraws, tries, maxTries, setCoins,
+      setLevel, setBonusDrawsPerHour, setBonusDraws, setClaimableBonusDraws, setTries,
+      addCoins, deductBonusDraws, updateTries, setMaxTries, claimBonusDraws, addBonusDraws
     }}>
       {children}
     </GameContext.Provider>
