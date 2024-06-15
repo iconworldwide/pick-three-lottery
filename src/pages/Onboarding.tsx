@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './styles/onboarding.css';
 
+import onboarding0 from '../assets/images/onboarding0.png';
 import onboarding1 from '../assets/images/onboarding1.png';
 import onboarding2 from '../assets/images/onboarding2.png';
 import onboarding3 from '../assets/images/onboarding3.png';
@@ -10,7 +11,7 @@ import onboarding6 from '../assets/images/onboarding6.png';
 import onboarding7 from '../assets/images/onboarding7.png';
 import onboarding8 from '../assets/images/onboarding8.png';
 
-const onboardingImages = [onboarding1, onboarding2, onboarding3, onboarding4, onboarding5, onboarding6, onboarding7, onboarding8];
+const onboardingImages = [onboarding0];
 
 interface OnboardingProps {
   onComplete: () => void;
