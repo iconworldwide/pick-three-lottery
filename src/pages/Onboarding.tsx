@@ -24,7 +24,7 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     if (currentStep < onboardingImages.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      localStorage.setItem('onboardingCompleted', 'true');
+      localStorage.setItem('newOnboardingCompleted', 'true');
       onComplete();
     }
   };

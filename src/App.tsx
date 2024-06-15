@@ -20,13 +20,13 @@ import { GameProvider } from './context/GameContext';
 
 function App() {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
-    const onboardingCompleted = localStorage.getItem('onboardingCompleted');
+    const onboardingCompleted = localStorage.getItem('newOnboardingCompleted');
     return onboardingCompleted === 'true';
   });
 
   const handleOnboardingComplete = () => {
     setIsOnboardingComplete(true);
-    localStorage.setItem('onboardingCompleted', 'true');
+    localStorage.setItem('newOnboardingCompleted', 'true');
   };
 
   if (!isOnboardingComplete) {
