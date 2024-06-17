@@ -20,7 +20,6 @@ interface GameContextProps {
   updateTries: (increase: boolean) => void;
   claimBonusDraws: () => void;
   addBonusDraws: (amount: number) => void;
-  calculateElapsedTries: () => void;
 }
 
 const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -67,9 +66,6 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const savedClaimableBonusDraws = localStorage.getItem('claimableBonusDraws');
   const savedLastClaimedTime = localStorage.getItem('lastClaimedTime');
   const lastClaimedTime = savedLastClaimedTime ? parseInt(savedLastClaimedTime) : Date.now();
-
-  const savedLastActiveTime = localStorage.getItem('lastActiveTime');
-  const lastActiveTime = savedLastActiveTime ? parseInt(savedLastActiveTime) : Date.now();
 
   // Calculate initial claimable bonus draws
   const initialClaimableBonusDraws = savedClaimableBonusDraws
