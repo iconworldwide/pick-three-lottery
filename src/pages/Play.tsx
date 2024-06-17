@@ -145,7 +145,7 @@ function Play() {
         if (bonusDraws > 0) {
           await performDraw();
           deductBonusDraws();
-          await new Promise(resolve => setTimeout(resolve, 1)); // Wait 1 second between draws
+          // await new Promise(resolve => setTimeout(resolve, 1)); // Wait 1 second between draws
         }
       }
     } else {

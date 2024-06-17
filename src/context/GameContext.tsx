@@ -20,6 +20,7 @@ interface GameContextProps {
   updateTries: (increase: boolean) => void;
   claimBonusDraws: () => void;
   addBonusDraws: (amount: number) => void;
+  calculateElapsedTries: () => void;
 }
 
 const GameContext = createContext<GameContextProps | undefined>(undefined);
@@ -66,6 +67,9 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const savedClaimableBonusDraws = localStorage.getItem('claimableBonusDraws');
   const savedLastClaimedTime = localStorage.getItem('lastClaimedTime');
   const lastClaimedTime = savedLastClaimedTime ? parseInt(savedLastClaimedTime) : Date.now();
+
+  const savedLastActiveTime = localStorage.getItem('lastActiveTime');
+  const lastActiveTime = savedLastActiveTime ? parseInt(savedLastActiveTime) : Date.now();
 
   // Calculate initial claimable bonus draws
   const initialClaimableBonusDraws = savedClaimableBonusDraws
@@ -118,20 +122,19 @@ export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     } else {
       setTries(prevTries => prevTries - 1);
     }
-  }
+  };
 
   const addCoins = (amount: number) => {
     setCoins(prevCoins => {
       let newCoins = prevCoins + amount;
       let newLevel = level;
-      let coinsForNextLevel = 10000 * Math.pow(2, level - 1);
+      let coinsForNextLevel = 10000 * Math.pow(2, newLevel - 1);
       while (newCoins >= coinsForNextLevel) {
         newCoins -= coinsForNextLevel;
         newLevel += 1;
         coinsForNextLevel = 10000 * Math.pow(2, newLevel - 1);
       }
       if (newLevel > level) {
-        const levelUp = newLevel - level;
         setLevel(newLevel);
         setMaxTries(prevMaxTries => prevMaxTries + ((newLevel - level) * 100));
       }
