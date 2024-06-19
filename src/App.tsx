@@ -35,6 +35,7 @@ function App() {
 
   const tg = window.Telegram.WebApp;
   tg.enableClosingConfirmation();
+  tg.expand();
   return (
     <GameProvider>
       <Router>
