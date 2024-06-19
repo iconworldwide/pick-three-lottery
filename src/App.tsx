@@ -17,6 +17,11 @@ import Earn from "./pages/Earn";
 import Roadmap from "./pages/Roadmap";
 import Onboarding from './pages/Onboarding';
 import { GameProvider } from './context/GameContext';
+declare global {
+  interface Window {
+      Telegram:any;
+  }
+}
 
 function App() {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
