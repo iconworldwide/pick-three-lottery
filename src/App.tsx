@@ -33,6 +33,8 @@ function App() {
     return <Onboarding onComplete={handleOnboardingComplete} />;
   }
 
+  const tg = window.Telegram.WebApp;
+  tg.enableClosingConfirmation();
   return (
     <GameProvider>
       <Router>
