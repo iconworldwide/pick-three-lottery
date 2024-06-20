@@ -2,11 +2,10 @@
     display: block;
     margin: 0 auto;
     text-align: center;
-    font-family: 'belligerent', sans-serif;
+    font-family: 'Sora', sans-serif;
     background-color: rgba(34, 34, 34, 0.8);
     font-weight: bold;
-    font-family: 'belligerent', sans-serif;
-    font-size: 36px;
+    font-size: 24px;
     padding: 10px;
     padding-bottom: 0;
     color: #e9c46a;
@@ -17,19 +16,18 @@
     width: 106px;
     display: block;
     margin: 0 auto;
-    margin-bottom: 10px;
 }
 
 .top-info-display {
     display: flex;
-    font-size: 16px;
+    font-size: 14px;
     justify-content: space-between;
     padding-bottom: 10px;
 }
 
 .bottom-info-display {
     display: flex;
-    font-size: 16px;
+    font-size: 14px;
     justify-content: space-between;
     align-items: center;
 }

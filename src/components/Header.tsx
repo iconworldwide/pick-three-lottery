@@ -22,7 +22,6 @@ const Header: React.FC<HeaderProps> = ({ lastDraw }) => {
   }, [lastDraw]);
 
   return (
-    <header>
       <div className="header-content">
         <span className='last-draw-title'>Last draw:</span>
         {animatedNumbers.map((num, index) => (
@@ -31,7 +30,6 @@ const Header: React.FC<HeaderProps> = ({ lastDraw }) => {
           </div>
         ))}
       </div>
-    </header>
   );
 };
 

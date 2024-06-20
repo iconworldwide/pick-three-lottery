@@ -20,7 +20,7 @@ const BetForm: React.FC<BetFormProps> = ({ numbers, exactMatch, selectNumber, to
               onChange={toggleExactMatch}
             />
             <label htmlFor='exactMatch' className="checkbox-label">
-            Exact
+            Exact Order
           </label>
         </div>
         <div className='radio-item'>
@@ -31,7 +31,7 @@ const BetForm: React.FC<BetFormProps> = ({ numbers, exactMatch, selectNumber, to
               onChange={toggleExactMatch}
             />
             <label htmlFor='anyMatch' className="checkbox-label">
-            Any
+            Any Order
           </label>
         </div>
       </div>
