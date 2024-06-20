@@ -24,7 +24,7 @@ const AppContainer = styled.div`
 `;
 
 function Play() {
-  const { coins, level, addCoins, updateTries } = UseGameContext();
+  const { coins, level, addCoins } = UseGameContext();
   const [lastDraw, setLastDraw] = useState<number[]>([0, 0, 0]);
   const [userBets, setUserBets] = useState<{ numbers: number[], exactMatch: boolean }[]>([]);
   const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
@@ -109,7 +109,6 @@ function Play() {
   const drawNumbers = async () => {
     setIsLoading(true);
     await performDraw();
-    updateTries(false);
     setIsLoading(false);
     setUserBets([]);
   };
