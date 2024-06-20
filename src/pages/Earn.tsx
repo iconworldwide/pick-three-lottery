@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './styles/earn.css'
-import CoinImage from '../assets/images/coin.png'; // Adjust the path as necessary
+import CoinImage from '../assets/images/coin.png';
+import { TonConnectButton } from "@tonconnect/ui-react";
+import styled from "styled-components";
+import { Button, FlexBoxCol, FlexBoxRow } from "../components/styled/styled";
+import { useTonConnect } from "../hooks/useTonConnect";
+import { CHAIN } from "@tonconnect/protocol";
 
 const tasks = [
   { logo: '🎯', title: 'Connect your TON wallet', prize: '$500k' },
@@ -27,6 +32,8 @@ const Earn: React.FC = () => {
     setCompletedTasks(newCompletedTasks);
   };
 
+  const { connected, network, wallet } = useTonConnect();
+
   return (
     <div className="tab-content-earn">
       <div className="earn-container">
@@ -35,6 +42,14 @@ const Earn: React.FC = () => {
           <img src={CoinImage} alt="Coin" className="coin-image" />
         </div>
         <div className="earn-tasks">
+          <div className='earn-task'>
+          <div className="task-logo">🎯</div>
+              <div className="task-info">
+                <div className="task-title"><TonConnectButton /></div>
+                <div className="task-prize">G$500k</div>
+              </div>
+              {connected && <div className="task-checkmark">✔</div>}
+          </div>
           {tasks.map((task, index) => (
             <div
               key={index}

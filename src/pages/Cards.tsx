@@ -3,6 +3,9 @@ import { UseGameContext } from '../context/GameContext';
 import styled from 'styled-components';
 import Collectible from '../components/Collectible';
 import { ItemType } from '../models/tyles';
+import rudy from '../assets/images/cards/rudy.png';
+import airplane from '../assets/images/cards/airplane.png';
+import toni from '../assets/images/cards/toni.png';
 
 const TabsContainer = styled.div`
   display: flex;
@@ -32,7 +35,7 @@ const ItemsContainer = styled.div`
 const initialItems: ItemType[] = [
     {
       id: '1',
-      image: '../src/assets/images/cards/airplane.png',
+      image: airplane,
       title: 'Boeing 737',
       description: 'Buy and private jet!',
       bossLevel: 1,
@@ -42,7 +45,7 @@ const initialItems: ItemType[] = [
       passed: false,
     }, {
         id: '2',
-        image: '../src/assets/images/cards/Rudy.png',
+        image: rudy,
         title: 'Private meeting with Rudy Giuliani',
         description: "Make the major an offer he can't refuse",
         bossLevel: 100,
@@ -52,7 +55,7 @@ const initialItems: ItemType[] = [
         passed: false,
       }, {
         id: '3',
-        image: '../src/assets/images/cards/toni.png',
+        image: toni,
         title: 'Hire Toni Montana to clear your enemies.',
         description: "No people, no problem chiko.",
         bossLevel: 30,

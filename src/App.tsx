@@ -1,15 +1,6 @@
 import "./App.css";
-import { TonConnectButton } from "@tonconnect/ui-react";
-import styled from "styled-components";
-import { Button, FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
-import { useTonConnect } from "./hooks/useTonConnect";
-import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
-import Header from "./components/Header";
-import { useEffect, useState } from "react";
-import CoinDisplay from "./components/CoinDisplay";
-import BetForm from "./components/BetForm";
-import DrawButton from "./components/DrawButton";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, NavLink, Navigate } from 'react-router-dom';
 import Boss from "./pages/Boss";
 import Play from "./pages/Play";
@@ -38,6 +29,11 @@ function App() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('username');
   }
+
+  function getReferenceFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('reference');
+  }
   
   const registerUser = async (userId: string, username: string) => {
     const userDoc = doc(db, "users", userId);
@@ -53,7 +49,7 @@ function App() {
         exactMatchCount: 0,
         tries: 100,
         maxTries: 100,
-        lastClaimedTime: new Date()
+        lastLogin: new Date()
       });
       console.log("User registered successfully!", userDoc);
     } else {
@@ -83,7 +79,7 @@ function App() {
   const tg = window.Telegram.WebApp;
   tg.enableClosingConfirmation();
   tg.expand();
-  
+
   return (
       <GameProvider>
         <Router>
