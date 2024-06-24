@@ -60,9 +60,11 @@ const App: React.FC = () => {
   tg.expand();
   const params = new URLSearchParams(window.Telegram.WebApp.initData);
   const userData = Object.fromEntries(params);
-  // userData.user = JSON.parse(userData.user);
-  if(userData !== undefined) {
+  const userInformation = JSON.parse(userData.user);
+  if(userInformation !== undefined) {
     alert(JSON.stringify(userData));
+    alert(userInformation.id);
+    alert(userInformation.username)
   }
 
   return (
@@ -82,7 +84,8 @@ const App: React.FC = () => {
             <nav className="tab-bar">
               <NavLink to={`/pick-three-lottery/play?${queryString}`} className="tab-link">
                 <i className="fas fa-gamepad"></i>
-                {JSON.stringify(userData)}
+                {userInformation.id}
+                {userInformation.username}
                 <span>Play</span>
               </NavLink>
               <NavLink to={`/pick-three-lottery/boss?${queryString}`} className="tab-link">
