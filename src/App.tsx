@@ -20,7 +20,7 @@ declare global {
 }
 
 const AppWrapper: React.FC = () => {
-  const { registerUser, user } = useUserContext();
+  
 
   if(!user) {
     // Register user from URL parameters if present
@@ -29,15 +29,6 @@ const AppWrapper: React.FC = () => {
     const username = urlParams.get('username') || '';
     const reference = urlParams.get('reference') || '';
 
-    const params = new URLSearchParams(window.Telegram.WebApp.initData);
-    const userData = Object.fromEntries(params);
-    const userInformation = JSON.parse(userData.user);
-
-    if (userInformation.id && !user) {
-      alert(userInformation.id);
-      alert(userInformation.username);
-      registerUser(userInformation.id, userInformation.username, reference);
-    }
   }
 
   return null;
@@ -46,6 +37,18 @@ const AppWrapper: React.FC = () => {
 const App: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const queryString = searchParams.toString();
+  const { registerUser, user } = useUserContext();
+
+  const params = new URLSearchParams(window.Telegram.WebApp.initData);
+    const userData = Object.fromEntries(params);
+    const userInformation = JSON.parse(userData.user);
+
+    alert(userInformation.id);
+    if (userInformation.id && !user) {
+      alert(userInformation.id);
+      alert(userInformation.username);
+      registerUser(userInformation.id, userInformation.username, '');
+    }
 
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
     const onboardingCompleted = localStorage.getItem('newOnboardingCompleted');
