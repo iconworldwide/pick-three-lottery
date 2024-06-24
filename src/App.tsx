@@ -24,12 +24,9 @@ const AppWrapper: React.FC = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.Telegram.WebApp.initData);
     const userData = Object.fromEntries(params);
-    alert(100);
     if (userData.user) {
-      alert(8787);
       const userInformation = JSON.parse(userData.user);
-      if (userInformation.id) {
-        alert(1824);
+      if (userInformation.id && !user) {
         registerUser(userInformation.id, userInformation.username, '');
       }
     }
@@ -41,6 +38,7 @@ const AppWrapper: React.FC = () => {
 const App: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const queryString = searchParams.toString();
+  alert(queryString);
 
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
     const onboardingCompleted = localStorage.getItem('newOnboardingCompleted');

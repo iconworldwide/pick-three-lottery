@@ -70,14 +70,9 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [user, setUser] = useState<User | null>(null);
 
     const registerUser = async (user_Id: number, username: string, reference?: string) => {
-      alert(9876543)
-      alert(username)
-
       const userId = user_Id.toString();
       const userDoc = doc(db, "users", userId);
       const userSnapshot = await getDoc(userDoc);
-
-      
   
       if (!userSnapshot.exists()) {
         const newUser: User = {
