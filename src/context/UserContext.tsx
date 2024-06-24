@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { db } from '../firebase';
-import { doc, setDoc, getDoc, updateDoc, arrayUnion, collection, getDocs, query, where } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, arrayUnion, collection, getDocs, query, where, Timestamp } from "firebase/firestore";
 
 export interface UserCards {
     id: string;
@@ -9,8 +9,8 @@ export interface UserCards {
     price: number;
     requiredLevel: number;
     imageUrl: string;
-    startDate: string;
-    endDate: string;
+    startDate: Timestamp;
+    endDate: Timestamp;
     passed: boolean;
 }
 
