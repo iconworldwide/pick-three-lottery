@@ -43,6 +43,7 @@ const AppContent: React.FC = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const queryString = searchParams.toString();
+  alert(queryString);
 
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
     const onboardingCompleted = localStorage.getItem('newOnboardingCompleted');
