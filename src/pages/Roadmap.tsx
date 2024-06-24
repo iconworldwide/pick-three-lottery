@@ -2,35 +2,23 @@ import React, { useState } from 'react';
 import './styles/roadmap.css';
 
 const steps = [
-  { title: 'Step 1: Concept', description: 'Define the concept and goals.' },
-  { title: 'Step 2: Design', description: 'Create the design and prototypes.' },
-  { title: 'Step 3: Development', description: 'Develop the application.' },
-  { title: 'Step 4: Testing', description: 'Test the application.' },
-  { title: 'Step 5: Launch', description: 'Launch the application.' },
-  { title: 'Step 6: Post-Launch', description: 'Post-launch support and updates.' },
+  { title: 'Step 1: TON Release', description: 'Release Pick 3 Lottery on TON', completed: true },
+  { title: 'Step 2: Marketing', description: 'Start the promotion of the game', completed: true },
+  { title: 'Step 3: NFT Releases', description: 'Develop the NFT concept, so Cards can be purchased as NFTs.', completed: false },
+  { title: 'Step 4: Community Competitions', description: 'The community will vote thru our system for next week cards.', completed: false },
+  { title: 'Step 5: Airdrop', description: 'Airdrop to users based on their cards, invited friends, levels and exact matches.', completed: false },
+  { title: 'Step 6: Post-Launch', description: 'Open Gangster Games Game Studio, all holders will be airdropped Governance Token so we all decide what is next for us.', completed: false },
 ];
 
 const Roadmap: React.FC = () => {
-  const [completedSteps, setCompletedSteps] = useState<boolean[]>(() => {
-    const savedCompletedSteps = localStorage.getItem('completedRoadmapSteps');
-    return savedCompletedSteps ? JSON.parse(savedCompletedSteps) : [true, true, false, false, false, false];
-  });
-
-  const toggleStepCompletion = (index: number) => {
-    const newCompletedSteps = [...completedSteps];
-    newCompletedSteps[index] = !newCompletedSteps[index];
-    setCompletedSteps(newCompletedSteps);
-    localStorage.setItem('completedRoadmapSteps', JSON.stringify(newCompletedSteps));
-  };
-
   return (
     <div className="tab-content-roadmap">
       <div className="roadmap-container">
         <h1 className="roadmap-title">Roadmap</h1>
         <div className="roadmap-steps">
           {steps.map((step, index) => (
-            <div key={index} className={`roadmap-step ${completedSteps[index] ? 'completed' : ''}`}>
-              <div className="step-content" onClick={() => toggleStepCompletion(index)}>
+            <div key={index} className={`roadmap-step ${steps[index].completed ? 'completed' : ''}`}>
+              <div className="step-content">
                 <div className="step-title">{step.title}</div>
                 <div className="step-description">{step.description}</div>
               </div>

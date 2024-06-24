@@ -7,8 +7,12 @@ body {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 66px);
   font-family: 'Sora', sans-serif;
+}
+
+.container {
+  min-height: 640px;
 }
 
 .tab-content {

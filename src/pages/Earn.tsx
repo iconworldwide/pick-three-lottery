@@ -2,21 +2,21 @@ import React, { useEffect, useState } from 'react';
 import './styles/earn.css'
 import CoinImage from '../assets/images/coin.png';
 import { TonConnectButton } from "@tonconnect/ui-react";
-import styled from "styled-components";
-import { Button, FlexBoxCol, FlexBoxRow } from "../components/styled/styled";
 import { useTonConnect } from "../hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
+import { useUserContext } from '../context/UserContext';
 
 const tasks = [
-  { logo: '🎯', title: 'Connect your TON wallet', prize: '$500k' },
-  { logo: '🏆', title: 'Follow us on Telegram', prize: '$50k' },
-  { logo: '🎲', title: 'Follow us on X', prize: '$50k' },
-  { logo: '💬', title: 'Refer a Friend', prize: '$200k' },
-  { logo: '📈', title: 'Reach Level 10', prize: '$100m' },
-  { logo: '🎁', title: 'Daily Login', prize: '$50k' },
+  { logo: '🎁', title: 'Daily Login', prize: 50000 },
+  { logo: '🏆', title: 'Follow us on Telegram', prize: 50000 },
+  { logo: '🎲', title: 'Follow us on X', prize: 50000 },
+  { logo: '💬', title: 'Refer a Friend', prize: 200000 },
 ];
 
 const Earn: React.FC = () => {
+  const { user, updateUser } = useUserContext();
+  const { connected } = useTonConnect();
+
   const [completedTasks, setCompletedTasks] = useState<boolean[]>(() => {
     const savedCompletedTasks = localStorage.getItem('completedTasks');
     return savedCompletedTasks ? JSON.parse(savedCompletedTasks) : Array(tasks.length).fill(false);
@@ -26,13 +26,38 @@ const Earn: React.FC = () => {
     localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
   }, [completedTasks]);
 
-  const toggleTaskCompletion = (index: number) => {
+  useEffect(() => {
+    if (user && !user.earnInfo.tonWalletConnected && connected) {
+      const newCoins = user.coins + 500000;
+      updateUser({
+        ...user,
+        coins: newCoins,
+        earnInfo: {
+          ...user.earnInfo,
+          tonWalletConnected: true,
+        }
+      });
+    }
+  }, [connected]);
+
+  const toggleTaskCompletion = async (index: number) => {
     const newCompletedTasks = [...completedTasks];
     newCompletedTasks[index] = !newCompletedTasks[index];
     setCompletedTasks(newCompletedTasks);
+
+    if (user && !completedTasks[index]) {
+      const newCoins = user.coins + tasks[index].prize;
+      const updatedUser = {
+        ...user,
+        coins: newCoins,
+      };
+      await updateUser(updatedUser);
+    }
   };
 
-  const { connected, network, wallet } = useTonConnect();
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="tab-content-earn">
@@ -43,12 +68,12 @@ const Earn: React.FC = () => {
         </div>
         <div className="earn-tasks">
           <div className='earn-task'>
-          <div className="task-logo">🎯</div>
-              <div className="task-info">
-                <div className="task-title"><TonConnectButton /></div>
-                <div className="task-prize">G$500k</div>
-              </div>
-              {connected && <div className="task-checkmark">✔</div>}
+            <div className="task-logo"></div>
+            <div className="task-info">
+              <div className="task-title"><TonConnectButton /></div>
+              <div className="task-prize">G$ 500,000</div>
+            </div>
+            {connected && <div className="task-checkmark">✔</div>}
           </div>
           {tasks.map((task, index) => (
             <div
@@ -59,7 +84,7 @@ const Earn: React.FC = () => {
               <div className="task-logo">{task.logo}</div>
               <div className="task-info">
                 <div className="task-title">{task.title}</div>
-                <div className="task-prize">{task.prize}</div>
+                <div className="task-prize">G${task.prize.toLocaleString()}</div>
               </div>
               {completedTasks[index] && <div className="task-checkmark">✔</div>}
             </div>

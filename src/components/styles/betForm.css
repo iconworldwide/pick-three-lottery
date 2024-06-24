@@ -105,6 +105,10 @@
     border-style: outset;
   }
 
+  /* .draw-button:disabled {
+    background-color: #514621;
+  } */
+
   *{
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
   }

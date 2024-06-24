@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import CoinDisplay from "../components/CoinDisplay";
 import BetForm from "../components/BetForm";
 import DrawButton from "../components/DrawButton";
-import { UseGameContext } from '../context/GameContext';
+import { useUserContext } from '../context/UserContext';
 
 const StyledApp = styled.div`
   background-color: #222;
@@ -24,21 +24,13 @@ const AppContainer = styled.div`
 `;
 
 function Play() {
-  const { coins, level, addCoins } = UseGameContext();
+  const { user, updateUser } = useUserContext();
   const [lastDraw, setLastDraw] = useState<number[]>([0, 0, 0]);
-  const [userBets, setUserBets] = useState<{ numbers: number[], exactMatch: boolean }[]>([]);
   const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [drawnNumbers, setDrawnNumbers] = useState<number[]>([]);
   const [numbers, setNumbers] = useState<number[]>([]);
   const [exactMatch, setExactMatch] = useState<boolean>(true);
-  const [exactMatchCount, setExactMatchCount] = useState<number>(0);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    localStorage.setItem('exactMatchCount', exactMatchCount.toString());
-  }, [exactMatchCount]);
 
   const selectNumber = (position: number, num: number) => {
     const newNumbers = [...numbers];
@@ -79,17 +71,18 @@ function Play() {
   };
 
   const performDraw = async () => {
+    if (!user) return;
     // Simulate drawing numbers with a delay
     const newDraw = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
-    setDrawnNumbers(newDraw);
 
     // Calculate winnings
     let winnings = 0;
+    let exactMatchesCounter = user.exactMatches;
     if (exactMatch) {
       const exactMatches = calculateExactMatches(numbers, newDraw);
       if (exactMatches === 3) {
         winnings = 1500;
-        setExactMatchCount(prevCount => prevCount + 1);
+        exactMatchesCounter = exactMatchesCounter + 1;
       } else if (exactMatches === 2) {
         winnings = 1000;
       }
@@ -103,14 +96,15 @@ function Play() {
     }
 
     setLastDraw(newDraw);
-    addCoins(winnings); // Ensure coins are updated correctly
+    // Update user data
+    const updatedUser = { ...user, coins: user.coins + winnings, exactMatches: exactMatchesCounter };
+    await updateUser(updatedUser);
   };
 
   const drawNumbers = async () => {
     setIsLoading(true);
     await performDraw();
     setIsLoading(false);
-    setUserBets([]);
   };
 
   const handleDraw = () => {
@@ -121,15 +115,19 @@ function Play() {
     <StyledApp className="tab-content">
       <AppContainer>
         <div className="container">
-          <CoinDisplay coins={coins} exactMatchCount={exactMatchCount} level={level} />
-          <Header lastDraw={lastDraw} />
-          <BetForm
-            numbers={numbers}
-            exactMatch={exactMatch}
-            selectNumber={selectNumber}
-            toggleExactMatch={toggleExactMatch}
-          />
-          <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDrawEnabled} />
+        {user && (
+            <>
+              <CoinDisplay username={user.username} coins={user.coins} exactMatchCount={user.exactMatches} level={user.level} />
+              <Header lastDraw={lastDraw} />
+              <BetForm
+                numbers={numbers}
+                exactMatch={exactMatch}
+                selectNumber={selectNumber}
+                toggleExactMatch={toggleExactMatch}
+              />
+              <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDrawEnabled} />
+            </>
+          )}
         </div>
       </AppContainer>
     </StyledApp>

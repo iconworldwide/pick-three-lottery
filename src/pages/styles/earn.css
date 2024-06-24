@@ -1,6 +1,7 @@
 /* earn.css */
 .tab-content-earn {
     background-color: #222;
+    min-height: 640px;
   }
   
   .earn-container {

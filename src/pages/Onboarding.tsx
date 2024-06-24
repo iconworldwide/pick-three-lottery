@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './styles/onboarding.css';
 
-import onboarding0 from '../assets/images/onboarding0.png';
+import onboarding2 from '../assets/images/onboarding2.png';
 
-const onboardingImages = [onboarding0];
+const onboardingImages = [onboarding2];
 
 interface OnboardingProps {
   onComplete: () => void;

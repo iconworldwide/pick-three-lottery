@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ItemType } from '../models/tyles';
+import { UserCards } from '../context/UserContext'; 
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
-const ItemContainer = styled.div`
-  width: 300px;
+import { Timestamp } from '@firebase/firestore-types';
+
+const ItemContainer = styled.div`  
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 16px;
   margin: 16px;
   text-align: center;
   background-color: #ccc;
+  font-family: 'Sora', sans-serif;
 `;
 
 const ItemImage = styled.img`
@@ -19,18 +21,23 @@ const ItemImage = styled.img`
 `;
 
 const ItemTitle = styled.h3`
-  margin: 10px 0;
+  margin: 4px 0;
+  font-size: 22px;
+
 `;
 
 const ItemDescription = styled.p`
   font-size: 14px;
   color: #555;
+  margin: 4px 0;
 `;
 
 const ItemDetails = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
+  margin-left: 10px;
+  margin-right: 10px;
 `;
 
 const PurchaseButton = styled.button`
@@ -40,6 +47,8 @@ const PurchaseButton = styled.button`
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  margin-bottom: 8px;
+  width: 260px;
 
   &:disabled {
     background-color: #ccc;
@@ -50,29 +59,54 @@ const PurchaseButton = styled.button`
   }
 `;
 
-interface ItemProps {
-  item: ItemType;
-  onPurchase: (itemId: string) => void;
+interface CollectibleProps {
+  item: UserCards;
+  owned: boolean;
+  onPurchase: (item: UserCards) => void;
 }
 
-const Collectible: React.FC<ItemProps> = ({ item, onPurchase }) => {
-  const { image, title, description, bossLevel, price, timeRemaining, owned, passed } = item;
+const Collectible: React.FC<CollectibleProps> = ({ item, owned, onPurchase }) => {
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const storage = getStorage();
+  const { title, description, requiredLevel, price, passed } = item;
+
+
+  const fireBaseTime = new Date(
+    item.endDate.seconds * 1000 + item.endDate.nanoseconds / 1000000,
+  ).toLocaleString();
+
+  useEffect(() => {
+    const fetchImageUrl = async () => {
+      try {
+        const url = await getDownloadURL(ref(storage, item.imageUrl));
+        setImageUrl(url);
+      } catch (error) {
+        console.error("Error fetching image URL: ", error);
+      }
+    };
+
+    fetchImageUrl();
+  }, [item.imageUrl, storage]);
 
   return (
     <ItemContainer>
-      <ItemImage src={image} alt={title} />
+      {imageUrl && <ItemImage src={imageUrl} alt={title} />}
       <ItemTitle>{title}</ItemTitle>
       <ItemDescription>{description}</ItemDescription>
-      <ItemDetails>
-        <div>Boss Level: {bossLevel}</div>
-        <div>Price: {price}</div>
-      </ItemDetails>
-      <ItemDetails>
-        <div>Time Remaining: {timeRemaining}s</div>
-      </ItemDetails>
-      <PurchaseButton onClick={() => onPurchase(item.id)} disabled={owned || passed}>
-        {owned ? 'Owned' : passed ? 'Passed' : 'Buy'}
-      </PurchaseButton>
+      {owned && (
+        <div>
+          <ItemDetails>
+            <div>Boss Level: <b>{requiredLevel}</b></div>
+            <div>Price: <b>G$ {price.toLocaleString('en-us', { minimumFractionDigits: 0 })}</b></div>
+          </ItemDetails>
+          <ItemDetails>
+            <div>End Sale Date: <b>{fireBaseTime}</b></div>
+          </ItemDetails>
+          <PurchaseButton onClick={() => onPurchase(item)} disabled={passed}>
+            {passed ? 'Passed' : 'Buy'}
+          </PurchaseButton>
+        </div>
+      )}
     </ItemContainer>
   );
 };

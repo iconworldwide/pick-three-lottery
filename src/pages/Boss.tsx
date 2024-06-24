@@ -2,54 +2,48 @@ import React, { useEffect, useState } from 'react';
 import './styles/boss.css';
 import Godfather from '../assets/images/godfather.png';
 import ConfirmationDialog from '../components/ConfirmationDialog';
-import { UseGameContext } from '../context/GameContext';
-
-interface BossItem {
-  icon: string;
-  text: string;
-  subtext: string;
-  price: number;
-}
+import { useUserContext } from '../context/UserContext';
+import { BossInfo } from '../context/UserContext';
 
 const Boss: React.FC = () => {
-  const { coins, addCoins } = UseGameContext();
-
-  const initialItems: BossItem[] = [
-    { icon: '🎲', text: 'Protection', subtext: 'Increase Boss Level by 1', price: 10000 },
-    { icon: '💰', text: 'Gambling', subtext: 'Increase Boss Level by 1', price: 10000 },
-    { icon: '🎁', text: 'Cigars', subtext: 'Increase Boss Level by 1', price: 10000 },
-    { icon: '🍕', text: 'Pizza', subtext: 'Increase Boss Level by 1', price: 10000 },
-    { icon: '🏆', text: 'Diamonds', subtext: 'Increase Boss Level by 1', price: 10000 },
-    { icon: '💎', text: 'Cannoli', subtext: 'Increase Boss Level by 1', price: 10000 },
-  ];
-
-  const [items, setItems] = useState<BossItem[]>(() => {
-    const savedItems = localStorage.getItem('bossItems');
-    return savedItems ? JSON.parse(savedItems) : initialItems;
-  });
-
+  const { user, updateUser } = useUserContext();
   const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
-  useEffect(() => {
-    localStorage.setItem('bossItems', JSON.stringify(items));
-  }, [items]);
+  // TODO: - check also for telegram user from bot API
+  if (!user) {
+    return <div>Loading...</div>;
+  }
+
+  const { bossInfo, coins } = user;
+  const { bossItems, bossLevel } = bossInfo;
 
   const handleItemClick = (index: number) => {
     setSelectedItem(index);
     setIsDialogVisible(true);
   };
 
-  const handleConfirm = () => {
-    if (selectedItem !== null && coins >= items[selectedItem].price) {
-      const newItems = [...items];
+  const handleConfirm = async () => {
+    if (selectedItem !== null && coins >= bossItems[selectedItem].price) {
+      const newItems = [...bossItems];
       newItems[selectedItem] = {
         ...newItems[selectedItem],
         price: newItems[selectedItem].price + 50000, // Increment price by 50k for each level
+        level: newItems[selectedItem].level + 1,
       };
 
-      setItems(newItems);
-      addCoins(-items[selectedItem].price); // Deduct coins
+      const newBossInfo: BossInfo = {
+        bossItems: newItems,
+        bossLevel: bossLevel + 1
+      }
+
+      const updatedUser = {
+        ...user,
+        coins: coins - bossItems[selectedItem].price,
+        bossInfo: newBossInfo,
+      };
+
+      await updateUser(updatedUser);
       setIsDialogVisible(false);
     } else {
       alert('Not enough coins to purchase the boss item!');
@@ -66,26 +60,27 @@ const Boss: React.FC = () => {
     <div className="tab-content-boss">
       <div className="boss-container">
         <div className="boss-header">
-          <span className="boss-label">Coins: ${coins.toLocaleString()}</span>
-          <span className='boss-label'>Boss Level: 4</span>
+          <span className="boss-label">Coins: G$ {user.coins.toLocaleString()}</span>
+          <span className='boss-label'>Boss Level: {bossLevel}</span>
         </div>
         <div className="boss-image">
           <img src={Godfather} alt="Godfather" />
         </div>
         <div className="boss-items">
-          {items.map((item, index) => (
+          {bossItems.map((item, index) => (
             <div key={index} className="boss-item" onClick={() => handleItemClick(index)}>
-              <div className="boss-item-icon">{item.icon} {item.text}</div>
-              <div className="boss-item-subtext">{item.subtext}</div>
+              <div className="boss-item-icon">{item.imageUrl} {item.title}</div>
+              <div className="boss-item-subtext">{item.description}</div>
               <div className="boss-item-level-price">
-                <div>${item.price.toLocaleString()}</div>
+                <div>Level {item.level}</div>
+                <div>G$ {item.price.toLocaleString()}</div>
               </div>
             </div>
           ))}
         </div>
         {isDialogVisible && (
           <ConfirmationDialog
-            message={`Do you want to level up ${items[selectedItem!].text}?`}
+            message={`Do you want to level up ${bossItems[selectedItem!].title}?`}
             onConfirm={handleConfirm}
             onCancel={handleCancel}
           />

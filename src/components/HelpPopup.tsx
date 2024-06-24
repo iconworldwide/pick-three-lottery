@@ -9,7 +9,7 @@ const HelpPopup: React.FC<HelpPopupProps> = ({ onClose }) => {
     <div className="popup-overlay">
       <div className="popup-content">
       <div className="table-container">
-        <div className="table-title">LEVEL 1 - PICK 3 REWARDS</div>
+        <div className="table-title">PICK 3 REWARDS</div>
           <table>
             <tbody>
               <tr className="exact-order">
