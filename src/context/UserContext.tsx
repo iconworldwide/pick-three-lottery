@@ -60,7 +60,7 @@ interface User {
 interface UserContextProps {
     user: User | null;
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
-    registerUser: (userId: string, username: string, reference?: string) => void;
+    registerUser: (user_Id: number, username: string, reference?: string) => void;
     updateUser: (user: User) => Promise<void>;
 }
 
@@ -69,9 +69,15 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
 
-    const registerUser = async (userId: string, username: string, reference?: string) => {
+    const registerUser = async (user_Id: number, username: string, reference?: string) => {
+      alert(9876543)
+      alert(username)
+
+      const userId = user_Id.toString();
       const userDoc = doc(db, "users", userId);
       const userSnapshot = await getDoc(userDoc);
+
+      
   
       if (!userSnapshot.exists()) {
         const newUser: User = {
