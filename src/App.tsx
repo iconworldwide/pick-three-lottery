@@ -22,14 +22,14 @@ declare global {
 const AppWrapper: React.FC = () => {
   
 
-  if(!user) {
-    // Register user from URL parameters if present
-    const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get('user_id');
-    const username = urlParams.get('username') || '';
-    const reference = urlParams.get('reference') || '';
+  // if(!user) {
+  //   // Register user from URL parameters if present
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const userId = urlParams.get('user_id');
+  //   const username = urlParams.get('username') || '';
+  //   const reference = urlParams.get('reference') || '';
 
-  }
+  // }
 
   return null;
 };
