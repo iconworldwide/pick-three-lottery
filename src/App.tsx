@@ -21,16 +21,18 @@ declare global {
 
 const AppWrapper: React.FC = () => {
   const { registerUser, user } = useUserContext();
-
-  const params = new URLSearchParams(window.Telegram.WebApp.initData);
-  const userData = Object.fromEntries(params);
-  const userInformation = JSON.parse(userData.user);
-
-  alert(userInformation.username);
-  if (userInformation.id && !user) {
-    alert(userInformation.username);
-    registerUser(userInformation.id, userInformation.username, '');
-  }
+  useEffect(() => {
+    const params = new URLSearchParams(window.Telegram.WebApp.initData);
+    const userData = Object.fromEntries(params);
+    if (userData.user) {
+      const userInformation = JSON.parse(userData.user);
+      alert(userInformation.username);
+      if (userInformation.id && !user) {
+        alert(userInformation.username);
+        registerUser(userInformation.id, userInformation.username, '');
+      }
+    }
+  }, [registerUser, user]);
 
   return null;
 };

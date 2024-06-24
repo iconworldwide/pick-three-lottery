@@ -1,6 +1,6 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { db } from '../firebase';
-import { doc, setDoc, getDoc, updateDoc, arrayUnion, collection, getDocs, query, where, Timestamp } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, arrayUnion, Timestamp } from "firebase/firestore";
 
 export interface UserCards {
     id: string;
