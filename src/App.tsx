@@ -58,6 +58,10 @@ const App: React.FC = () => {
   const tg = window.Telegram.WebApp;
   tg.enableClosingConfirmation();
   tg.expand();
+  const params = new URLSearchParams(window.Telegram.WebApp.initData);
+  const userData = Object.fromEntries(params);
+  userData.user = JSON.parse(userData.user);
+  alert(userData.user);
 
   return (
       <UserProvider>
