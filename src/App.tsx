@@ -26,12 +26,10 @@ const AppWrapper: React.FC = () => {
     const userData = Object.fromEntries(params);
     alert(777);
     if (userData.user) {
-      // const userInformation = JSON.parse(userData.user);
-      alert(userData.user);
-      // if (userInformation.id && !user) {
-        // alert(userInformation.username);
-        registerUser("userInformation.id", "userInformation.username", '');
-      // }
+      const userInformation = JSON.parse(userData.user);
+      if (userInformation.id) {
+        registerUser(userInformation.id, userInformation.username, '');
+      }
     }
   }, []);
 

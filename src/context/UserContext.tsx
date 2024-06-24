@@ -72,8 +72,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const registerUser = async (userId: string, username: string, reference?: string) => {
       const userDoc = doc(db, "users", userId);
       const userSnapshot = await getDoc(userDoc);
-
-      alert(888);
   
       if (!userSnapshot.exists()) {
         const newUser: User = {
@@ -104,7 +102,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setUser(newUser);
         console.log("User registered successfully!");
   
-        alert("log user")
         if (reference) {
           const inviterDoc = doc(db, "users", reference);
           await updateDoc(inviterDoc, {
