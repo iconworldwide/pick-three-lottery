@@ -24,15 +24,15 @@ const AppWrapper: React.FC = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.Telegram.WebApp.initData);
     const userData = Object.fromEntries(params);
-    alert(666);
-    // if (userData.user) {
+    alert(777);
+    if (userData.user) {
       // const userInformation = JSON.parse(userData.user);
-      // alert(userInformation.username);
+      alert(userData.user);
       // if (userInformation.id && !user) {
         // alert(userInformation.username);
         registerUser("userInformation.id", "userInformation.username", '');
       // }
-    // }
+    }
   }, []);
 
   return null;
