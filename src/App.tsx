@@ -43,9 +43,7 @@ const App: React.FC = () => {
     const userData = Object.fromEntries(params);
     const userInformation = JSON.parse(userData.user);
 
-    alert(userInformation.id);
     if (userInformation.id && !user) {
-      alert(userInformation.id);
       alert(userInformation.username);
       registerUser(userInformation.id, userInformation.username, '');
     }
