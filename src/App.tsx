@@ -28,9 +28,13 @@ const AppWrapper: React.FC = () => {
     const userId = urlParams.get('user_id');
     const username = urlParams.get('username') || '';
     const reference = urlParams.get('reference') || '';
-  
-    if (userId && !user) {    
-      registerUser(userId, username, reference);
+
+    const params = new URLSearchParams(window.Telegram.WebApp.initData);
+    const userData = Object.fromEntries(params);
+    const userInformation = JSON.parse(userData.user);
+
+    if (userInformation.id && !user) {    
+      registerUser(userInformation.id, userInformation.username, reference);
     }
   }
 
@@ -58,14 +62,6 @@ const App: React.FC = () => {
   const tg = window.Telegram.WebApp;
   tg.enableClosingConfirmation();
   tg.expand();
-  const params = new URLSearchParams(window.Telegram.WebApp.initData);
-  const userData = Object.fromEntries(params);
-  const userInformation = JSON.parse(userData.user);
-  if(userInformation !== undefined) {
-    alert(JSON.stringify(userData));
-    alert(userInformation.id);
-    alert(userInformation.username)
-  }
 
   return (
       <UserProvider>
@@ -84,8 +80,6 @@ const App: React.FC = () => {
             <nav className="tab-bar">
               <NavLink to={`/pick-three-lottery/play?${queryString}`} className="tab-link">
                 <i className="fas fa-gamepad"></i>
-                {userInformation.id}
-                {userInformation.username}
                 <span>Play</span>
               </NavLink>
               <NavLink to={`/pick-three-lottery/boss?${queryString}`} className="tab-link">
