@@ -37,11 +37,10 @@ const AppWrapper: React.FC = () => {
 
 const App: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
-  const windowLocation = window.location.toString();
   const queryString = searchParams.toString();
-  alert(333);
-  alert(window.location);
-  alert(searchParams);
+  if(queryString) {
+    alert(queryString);
+  }
 
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
     const onboardingCompleted = localStorage.getItem('newOnboardingCompleted');
@@ -67,8 +66,8 @@ const App: React.FC = () => {
         <Router>
           <div className="app-container">
             <Routes>
-              <Route path="/" element={<Navigate to={`/pick-three-lottery/play?${queryString}`} />} />
-              <Route path="/pick-three-lottery" element={<Navigate to={`/pick-three-lottery/play?${queryString}`} />} />
+              <Route path="/" element={<Navigate to={`/pick-three-lottery/play`} />} />
+              <Route path="/pick-three-lottery" element={<Navigate to={`/pick-three-lottery/play`} />} />
               <Route path="/pick-three-lottery/play" element={<Play />} />
               <Route path="/pick-three-lottery/boss" element={<Boss />} />
               <Route path="/pick-three-lottery/cards" element={<Cards />} />
@@ -76,27 +75,25 @@ const App: React.FC = () => {
               <Route path="/pick-three-lottery/roadmap" element={<Roadmap />} />
             </Routes>
             <nav className="tab-bar">
-              <NavLink to={`/pick-three-lottery/play?${queryString}`} className="tab-link">
+              <NavLink to={`/pick-three-lottery/play`} className="tab-link">
                 <i className="fas fa-gamepad"></i>
-                <span>Play
-                  
-                  {windowLocation}</span>
+                <span>Play</span>
               </NavLink>
-              <NavLink to={`/pick-three-lottery/boss?${queryString}`} className="tab-link">
+              <NavLink to={`/pick-three-lottery/boss`} className="tab-link">
                 <i className="fas fa-rocket"></i>
                 <span>Boss</span>
               </NavLink>
 
-              <NavLink to={`/pick-three-lottery/cards?${queryString}`} className="tab-link">
+              <NavLink to={`/pick-three-lottery/cards`} className="tab-link">
                 <i className="far fa-file-image"></i>
                 <span>Cards</span>
               </NavLink>
 
-              <NavLink to={`/pick-three-lottery/earn?${queryString}`} className="tab-link">
+              <NavLink to={`/pick-three-lottery/earn`} className="tab-link">
                 <i className="fas fa-coins"></i>
                 <span>Earn</span>
               </NavLink>
-              <NavLink to={`/pick-three-lottery/roadmap?${queryString}`} className="tab-link">
+              <NavLink to={`/pick-three-lottery/roadmap`} className="tab-link">
                 <i className="fas fa-globe-americas"></i>
                 <span>Roadmap</span>
               </NavLink>
