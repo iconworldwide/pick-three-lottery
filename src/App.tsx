@@ -37,8 +37,9 @@ const AppWrapper: React.FC = () => {
 
 const App: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
+  const windowLocation = window.location.toString();
   const queryString = searchParams.toString();
-  alert(123);
+  alert(333);
   alert(window.location);
 
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
@@ -76,7 +77,9 @@ const App: React.FC = () => {
             <nav className="tab-bar">
               <NavLink to={`/pick-three-lottery/play?${queryString}`} className="tab-link">
                 <i className="fas fa-gamepad"></i>
-                <span>Play</span>
+                <span>Play
+                  
+                  {windowLocation}</span>
               </NavLink>
               <NavLink to={`/pick-three-lottery/boss?${queryString}`} className="tab-link">
                 <i className="fas fa-rocket"></i>
