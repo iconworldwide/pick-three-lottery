@@ -39,7 +39,25 @@ const App: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const queryString = searchParams.toString();
   if(queryString) {
-    alert(queryString);
+    const refId = searchParams.get("tgWebAppStartParam");
+    alert(refId);
+    if (refId) {
+      const refIdString = extractRefIdNumber(refId);
+      if (refIdString !== null) {
+        alert(refIdString);
+      }
+    }
+  }
+
+  function extractRefIdNumber(refIdString: string) {
+    const refIdPattern = /^refId(\d+)$/;
+    const match = refIdString.match(refIdPattern);
+    
+    if (match) {
+      return match[1];  // This will return the numbers after "refId"
+    } else {
+      return null;  // Return null if the string does not match the pattern
+    }
   }
 
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
