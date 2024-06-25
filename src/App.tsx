@@ -38,7 +38,8 @@ const AppWrapper: React.FC = () => {
 const App: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const queryString = searchParams.toString();
-  alert(queryString);
+  alert(123);
+  alert(window.location);
 
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
     const onboardingCompleted = localStorage.getItem('newOnboardingCompleted');
