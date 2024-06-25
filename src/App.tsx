@@ -9,7 +9,7 @@ import Roadmap from "./pages/Roadmap";
 import Onboarding from './pages/Onboarding';
 import { GameProvider } from './context/GameContext';
 import { db } from './firebase';  // Import Firestore functions
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import Cards from "./pages/Cards";
 import { UserProvider, useUserContext } from './context/UserContext';
 
@@ -27,27 +27,34 @@ const AppWrapper: React.FC = () => {
     if (userData.user) {
       const userInformation = JSON.parse(userData.user);
       if (userInformation.id && !user) {
-        registerUser(userInformation.id, userInformation.username, '');
+        registerUser(userInformation.id, userInformation.username);
+
+        const searchParams = new URLSearchParams(window.location.search);
+        const queryString = searchParams.toString();
+        if(queryString) {
+          const refId = searchParams.get("tgWebAppStartParam");
+          if (refId) {
+            const refIdString = extractRefIdNumber(refId);
+            if (refIdString !== null) {
+              saveInvitation(refId, userInformation.id, userInformation.username);
+            }
+          }
+        }
       }
     }
   }, []);
 
-  return null;
-};
-
-const App: React.FC = () => {
-  const searchParams = new URLSearchParams(window.location.search);
-  const queryString = searchParams.toString();
-  if(queryString) {
-    const refId = searchParams.get("tgWebAppStartParam");
-    alert(refId);
-    if (refId) {
-      const refIdString = extractRefIdNumber(refId);
-      if (refIdString !== null) {
-        alert(refIdString);
-      }
+  const saveInvitation = async (refId: string, invitedUserId: string, invitedUsername: string) => {
+    try {
+      const refUserDoc = doc(db, "users", refId);
+      await updateDoc(refUserDoc, {
+        invitedUsers: arrayUnion({ userId: invitedUserId, username: invitedUsername })
+      });
+      console.log("Invitation saved successfully!");
+    } catch (error) {
+      console.error("Error saving invitation: ", error);
     }
-  }
+  };
 
   function extractRefIdNumber(refIdString: string) {
     const refIdPattern = /^refId(\d+)$/;
@@ -60,6 +67,10 @@ const App: React.FC = () => {
     }
   }
 
+  return null;
+};
+
+const App: React.FC = () => {
   const [isOnboardingComplete, setIsOnboardingComplete] = useState<boolean>(() => {
     const onboardingCompleted = localStorage.getItem('newOnboardingCompleted');
     return onboardingCompleted === 'true';
