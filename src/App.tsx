@@ -31,13 +31,11 @@ const AppWrapper: React.FC = () => {
 
         const searchParams = new URLSearchParams(window.location.search);
         const queryString = searchParams.toString();
-        alert("Registered User");
         if(queryString) {
           const refId = searchParams.get("tgWebAppStartParam");
           if (refId) {
             const refIdString = extractRefIdNumber(refId);
             if (refIdString !== null) {
-              alert("User Id: {refIdString}: " + refIdString);
               saveInvitation(refId, userInformation.id, userInformation.username);
             }
           }
@@ -46,7 +44,7 @@ const AppWrapper: React.FC = () => {
     }
   }, []);
 
-  const saveInvitation = async (refId: string, invitedUserId: string, invitedUsername: string) => {
+  const saveInvitation = async (refId: string, invitedUserId: number, invitedUsername: string) => {
     try {
       const refUserDoc = doc(db, "users", refId);
       await updateDoc(refUserDoc, {

@@ -7,7 +7,6 @@ import { CHAIN } from "@tonconnect/protocol";
 import { useUserContext } from '../context/UserContext';
 
 const tasks = [
-  { logo: '🎁', title: 'Daily Login', prize: 50000 },
   { logo: '🏆', title: 'Follow us on Telegram', prize: 50000 },
   { logo: '🎲', title: 'Follow us on X', prize: 50000 },
   { logo: '💬', title: 'Refer a Friend', prize: 200000 },
@@ -21,6 +20,8 @@ const Earn: React.FC = () => {
     const savedCompletedTasks = localStorage.getItem('completedTasks');
     return savedCompletedTasks ? JSON.parse(savedCompletedTasks) : Array(tasks.length).fill(false);
   });
+
+  const [canClaimDaily, setCanClaimDaily] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
@@ -40,6 +41,42 @@ const Earn: React.FC = () => {
     }
   }, [connected]);
 
+  const checkDailyLoginStatus = () => {
+    if (!user) return;
+    const now = new Date();
+    const lastLogin = new Date(user.earnInfo.dailyLogin.lastLogin);
+    if (now.toDateString() !== lastLogin.toDateString()) {
+      setCanClaimDaily(true);
+    } else {
+      setCanClaimDaily(false);
+    }
+  };
+
+  const handleDailyLogin = async () => {
+    if (!user) return;
+    const now = new Date();
+    const newStreak = (now.getTime() - new Date(user.earnInfo.dailyLogin.lastLogin).getTime()) / (1000 * 3600 * 24) <= 1
+      ? user.earnInfo.dailyLogin.streak + 1
+      : 1;
+
+    const newCoins = user.coins + 50000;
+    const updatedUser = {
+      ...user,
+      coins: newCoins,
+      earnInfo: {
+        ...user.earnInfo,
+        dailyLogin: {
+          streak: newStreak,
+          lastLogin: now,
+        }
+      }
+    };
+
+    await updateUser(updatedUser);
+    setCanClaimDaily(false);
+    alert("Daily reward claimed!");
+  };
+
   const toggleTaskCompletion = async (index: number) => {
     const newCompletedTasks = [...completedTasks];
     newCompletedTasks[index] = !newCompletedTasks[index];
@@ -56,7 +93,7 @@ const Earn: React.FC = () => {
   };
 
   if (!user) {
-    return <div>Loading...</div>;
+    // return <div>Loading...</div>;
   }
 
   return (
@@ -75,6 +112,17 @@ const Earn: React.FC = () => {
             </div>
             {connected && <div className="task-checkmark">✔</div>}
           </div>
+
+          <div className='earn-task' onClick={() => {
+            checkDailyLoginStatus();
+          }}>
+            <div className="task-logo">🎁</div>
+            <div className="task-info">
+              <div className="task-title">Daily Login</div>
+              <button onClick={handleDailyLogin} disabled={!canClaimDaily}>Claim G$ 50,000</button>
+            </div>
+          </div>
+
           {tasks.map((task, index) => (
             <div
               key={index}

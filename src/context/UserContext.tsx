@@ -16,7 +16,7 @@ export interface UserCards {
 
 interface InvitedUsers {
   username: string;
-  userId: string;
+  userId: number;
 }
 
 interface BossItem {
@@ -41,7 +41,7 @@ interface EarnInfo {
 
 interface DailyLogin {
   streak: number;
-  price: number;
+  lastLogin: Date;
 }
 
 interface User {
@@ -96,19 +96,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             tonWalletConnected: false,
             followOnX: false,
             followOnTelegram: false,
-            dailyLogin: { streak: 0, price: 0 }
+            dailyLogin: { streak: 0, lastLogin: new Date() }
           }
         };
         await setDoc(userDoc, newUser);
         setUser(newUser);
         console.log("User registered successfully!");
-  
-        if (reference) {
-          const inviterDoc = doc(db, "users", reference);
-          await updateDoc(inviterDoc, {
-            invitedUsers: arrayUnion({ username, userId })
-          });
-        }
       } else {
         const userData = userSnapshot.data() as User;
         setUser(userData);
