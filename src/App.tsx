@@ -31,11 +31,13 @@ const AppWrapper: React.FC = () => {
 
         const searchParams = new URLSearchParams(window.location.search);
         const queryString = searchParams.toString();
+        alert("Registered User");
         if(queryString) {
           const refId = searchParams.get("tgWebAppStartParam");
           if (refId) {
             const refIdString = extractRefIdNumber(refId);
             if (refIdString !== null) {
+              alert("User Id: {refIdString}: " + refIdString);
               saveInvitation(refId, userInformation.id, userInformation.username);
             }
           }
