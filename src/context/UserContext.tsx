@@ -16,7 +16,7 @@ export interface UserCards {
 
 interface InvitedUsers {
   username: string;
-  userId: string;
+  userId: number;
 }
 
 interface BossItem {

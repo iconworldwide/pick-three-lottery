@@ -123,6 +123,18 @@ const Earn: React.FC = () => {
             </div>
           </div>
 
+          <div>
+              Invited Users:
+              <div>
+                {user?.invitedUsers.map((invitedUser, index) => (
+                  <div key={index}>
+                    <span>Username: {invitedUser.username}</span>
+                    <span>User ID: {invitedUser.userId}</span>
+                  </div>
+                ))}
+              </div>
+          </div>
+
           {tasks.map((task, index) => (
             <div
               key={index}
