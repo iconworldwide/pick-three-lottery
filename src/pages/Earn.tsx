@@ -7,9 +7,9 @@ import { CHAIN } from "@tonconnect/protocol";
 import { useUserContext } from '../context/UserContext';
 
 const tasks = [
-  { logo: '💎', title: 'Follow us on Telegram', prize: 50000 },
-  { logo: '𝕏', title: 'Follow us on X', prize: 50000 },
-  { logo: '💬', title: 'Refer a Friend', prize: 200000 },
+  { title: 'Follow us on Telegram', prize: 50000, url: "" },
+  { title: 'Follow us on X', prize: 50000, url: "" },
+  { title: 'Follow us on Youtube', prize: 50000, url: "https://www.youtube.com/@GangsterGamesPick3" },
 ];
 
 const Earn: React.FC = () => {
@@ -105,7 +105,6 @@ const Earn: React.FC = () => {
         </div>
         <div className="earn-tasks">
           <div className='earn-task'>
-            <div className="task-logo"></div>
             <div className="task-info">
               <div className="task-title"><TonConnectButton /></div>
               <div className="task-prize">G$ 500,000</div>
@@ -116,7 +115,6 @@ const Earn: React.FC = () => {
           <div className='earn-task' onClick={() => {
             checkDailyLoginStatus();
           }}>
-            <div className="task-logo">🎁</div>
             <div className="task-info">
               <div className="task-title">Daily Login</div>
               <button onClick={handleDailyLogin} disabled={!canClaimDaily}>Claim G$ 50,000</button>
@@ -128,8 +126,9 @@ const Earn: React.FC = () => {
               <div>
                 {user?.invitedUsers.map((invitedUser, index) => (
                   <div key={index}>
-                    <span>Username: {invitedUser.username}</span>
-                    <span>User ID: {invitedUser.userId}</span>
+                    <div>Username: {invitedUser.username}</div>
+                    <div>User ID: {invitedUser.userId}</div>
+                    <button>Claim Reward</button>
                   </div>
                 ))}
               </div>
@@ -141,7 +140,6 @@ const Earn: React.FC = () => {
               className={`earn-task ${completedTasks[index] ? 'completed' : ''}`}
               onClick={() => toggleTaskCompletion(index)}
             >
-              <div className="task-logo">{task.logo}</div>
               <div className="task-info">
                 <div className="task-title">{task.title}</div>
                 <div className="task-prize">G${task.prize.toLocaleString()}</div>
