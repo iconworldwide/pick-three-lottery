@@ -16,7 +16,7 @@ export interface UserCards {
 
 interface InvitedUsers {
   username: string;
-  userId: number;
+  userId: string;
 }
 
 interface BossItem {
@@ -102,6 +102,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         await setDoc(userDoc, newUser);
         setUser(newUser);
         console.log("User registered successfully!");
+        alert("User registered successfully!");
       } else {
         const userData = userSnapshot.data() as User;
         setUser(userData);

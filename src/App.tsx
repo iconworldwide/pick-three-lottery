@@ -44,15 +44,18 @@ const AppWrapper: React.FC = () => {
     }
   }, []);
 
-  const saveInvitation = async (refId: string, invitedUserId: number, invitedUsername: string) => {
+  const saveInvitation = async (refId: string, invitedUserId: string, invitedUsername: string) => {
     try {
       const refUserDoc = doc(db, "users", refId);
       await updateDoc(refUserDoc, {
         invitedUsers: arrayUnion({ userId: invitedUserId, username: invitedUsername })
       });
+
+      alert("Invitation saved successfully!")
       console.log("Invitation saved successfully!");
     } catch (error) {
       console.error("Error saving invitation: ", error);
+      alert("Error saving invigation " + error);
     }
   };
 

@@ -7,8 +7,8 @@ import { CHAIN } from "@tonconnect/protocol";
 import { useUserContext } from '../context/UserContext';
 
 const tasks = [
-  { logo: '🏆', title: 'Follow us on Telegram', prize: 50000 },
-  { logo: '🎲', title: 'Follow us on X', prize: 50000 },
+  { logo: '💎', title: 'Follow us on Telegram', prize: 50000 },
+  { logo: '𝕏', title: 'Follow us on X', prize: 50000 },
   { logo: '💬', title: 'Refer a Friend', prize: 200000 },
 ];
 
