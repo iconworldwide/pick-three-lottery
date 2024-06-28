@@ -50,12 +50,9 @@ const AppWrapper: React.FC = () => {
       await updateDoc(refUserDoc, {
         invitedUsers: arrayUnion({ userId: invitedUserId, username: invitedUsername })
       });
-
-      alert("Invitation saved successfully!")
       console.log("Invitation saved successfully!");
     } catch (error) {
       console.error("Error saving invitation: ", error);
-      alert("Error saving invigation " + error);
     }
   };
 
