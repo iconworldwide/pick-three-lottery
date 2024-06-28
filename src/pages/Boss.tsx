@@ -69,7 +69,12 @@ const Boss: React.FC = () => {
         <div className="boss-items">
           {bossItems.map((item, index) => (
             <div key={index} className="boss-item" onClick={() => handleItemClick(index)}>
-              <div className="boss-item-icon">{item.imageUrl} {item.title}</div>
+              <div className="boss-item-icon"> 
+                <img className='boss-image-item' src={item.imageUrl} alt="boss-item" />
+                <div>
+                  {item.title}
+                </div>
+              </div>
               <div className="boss-item-subtext">{item.description}</div>
               <div className="boss-item-level-price">
                 <div>Level {item.level}</div>

@@ -113,14 +113,13 @@
   }
 
   .task-button {
-    padding: 10px 20px;
+    padding: 5px 10px;
     cursor: pointer;
     font-family: 'Sora', sans-serif;
     font-size: 14px;
     border: none;
     border-radius: 8px;
     display: block;
-    box-shadow: 5px 5px 10px 2px rgba(0,0,0, 0.8);
     background-color: #e9c46a;
     color: #222;
     outline: none;

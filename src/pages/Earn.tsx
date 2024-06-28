@@ -160,7 +160,7 @@ const Earn: React.FC = () => {
                     window.open(task.url, '_blank');
                     handleFollowTaskCompletion(task.key, task.prize);
                   }}>
-                    {user.earnInfo[task.key] ? 'Claimed' : `G$ ${task.prize.toLocaleString()}`}
+                    {user.earnInfo[task.key] ? 'Visit' : `G$ ${task.prize.toLocaleString()}`}
                   </button>
                 </div>
               </div>
