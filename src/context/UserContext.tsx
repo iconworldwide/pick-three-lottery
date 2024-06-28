@@ -17,6 +17,7 @@ export interface UserCards {
 interface InvitedUsers {
   username: string;
   userId: number;
+  claimed: boolean;
 }
 
 interface BossItem {
@@ -34,8 +35,11 @@ export interface BossInfo {
 
 interface EarnInfo {
   tonWalletConnected: boolean;
+  tonWallet: string;
   followOnX: boolean;
   followOnTelegram: boolean;
+  followOnYoutube: boolean;
+  followTikTok: boolean;
   dailyLogin: DailyLogin;
 }
 
@@ -94,8 +98,11 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           cards: [],
           earnInfo: {
             tonWalletConnected: false,
+            tonWallet: '',
             followOnX: false,
             followOnTelegram: false,
+            followOnYoutube: false,
+            followTikTok: false,
             dailyLogin: { streak: 0, lastLogin: new Date() }
           }
         };

@@ -7,25 +7,16 @@ import { CHAIN } from "@tonconnect/protocol";
 import { useUserContext } from '../context/UserContext';
 
 const tasks = [
-  { title: 'Follow us on Telegram', prize: 50000, url: "" },
-  { title: 'Follow us on X', prize: 50000, url: "" },
-  { title: 'Follow us on Youtube', prize: 50000, url: "https://www.youtube.com/@GangsterGamesPick3" },
+  { title: 'Follow us on Telegram', prize: 50000, url: "https://t.me/gangstergamesio", key: 'followOnTelegram'},
+  { title: 'Follow us on X', prize: 50000, url: "https://x.com/GangsterGamesio", key: 'followOnX'},
+  { title: 'Follow us on Youtube', prize: 50000, url: "https://www.youtube.com/@GangsterGamesPick3", key: 'followOnYoutube'},
+  { title: 'Follow us on TikTok', prize: 50000, url: "https://www.tiktok.com/@gangstergamespick3", key: 'followTikTok'},
 ];
 
 const Earn: React.FC = () => {
   const { user, updateUser } = useUserContext();
-  const { connected } = useTonConnect();
-
-  const [completedTasks, setCompletedTasks] = useState<boolean[]>(() => {
-    const savedCompletedTasks = localStorage.getItem('completedTasks');
-    return savedCompletedTasks ? JSON.parse(savedCompletedTasks) : Array(tasks.length).fill(false);
-  });
-
+  const { connected, wallet } = useTonConnect();
   const [canClaimDaily, setCanClaimDaily] = useState(false);
-
-  useEffect(() => {
-    localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
-  }, [completedTasks]);
 
   useEffect(() => {
     if (user && !user.earnInfo.tonWalletConnected && connected) {
@@ -36,6 +27,7 @@ const Earn: React.FC = () => {
         earnInfo: {
           ...user.earnInfo,
           tonWalletConnected: true,
+          tonWallet: wallet ?? '',
         }
       });
     }
@@ -55,7 +47,8 @@ const Earn: React.FC = () => {
   const handleDailyLogin = async () => {
     if (!user) return;
     const now = new Date();
-    const newStreak = (now.getTime() - new Date(user.earnInfo.dailyLogin.lastLogin).getTime()) / (1000 * 3600 * 24) <= 1
+    const lastLogin = new Date(user.earnInfo.dailyLogin.lastLogin);
+    const newStreak = now.getDate() !== lastLogin.getDate() && now.getMonth() === lastLogin.getMonth() && now.getFullYear() === lastLogin.getFullYear()
       ? user.earnInfo.dailyLogin.streak + 1
       : 1;
 
@@ -77,30 +70,51 @@ const Earn: React.FC = () => {
     alert("Daily reward claimed!");
   };
 
-  const toggleTaskCompletion = async (index: number) => {
-    const newCompletedTasks = [...completedTasks];
-    newCompletedTasks[index] = !newCompletedTasks[index];
-    setCompletedTasks(newCompletedTasks);
-
-    if (user && !completedTasks[index]) {
-      const newCoins = user.coins + tasks[index].prize;
-      const updatedUser = {
-        ...user,
-        coins: newCoins,
-      };
-      await updateUser(updatedUser);
-    }
+  const handleFollowTaskCompletion = async (taskKey: string, prize: number) => {
+    if (!user || user.earnInfo[taskKey]) return;
+    const newCoins = user.coins + prize;
+    const updatedUser = {
+      ...user,
+      coins: newCoins,
+      earnInfo: {
+        ...user.earnInfo,
+        [taskKey]: true,
+      }
+    };
+    await updateUser(updatedUser);
   };
 
+  const handleClaimInviteReward = async (index: number, prize: number) => {
+    if (!user) return;
+    const newCoins = user.coins + prize;
+    const updatedUser = {
+      ...user,
+      coins: newCoins,
+      invitedUsers: user.invitedUsers.map((invitedUser, i) => 
+        i === index ? { ...invitedUser, claimed: true } : invitedUser
+      )
+    };
+    await updateUser(updatedUser);
+  };
+
+  const handleShare = () => {
+    const message = `Check out Gangster Games! Join through this link: https://t.me/gangster_games_pick3_bot/GangsterGamesPick3?startapp=refId${user?.userId}`;
+    window.Telegram.WebApp.shareText(message);
+  };
+
+  useEffect(() => {
+    checkDailyLoginStatus();
+  }, [user]);
+
   if (!user) {
-    // return <div>Loading...</div>;
+    return <div>Loading...</div>;
   }
 
   return (
     <div className="tab-content-earn">
       <div className="earn-container">
         <div className="earn-header">
-          <h1 className="earn-title">EARN MORE</h1>
+          <h1 className="earn-title">Earn More</h1>
           <img src={CoinImage} alt="Coin" className="coin-image" />
         </div>
         <div className="earn-tasks">
@@ -112,41 +126,47 @@ const Earn: React.FC = () => {
             {connected && <div className="task-checkmark">✔</div>}
           </div>
 
-          <div className='earn-task' onClick={() => {
-            checkDailyLoginStatus();
-          }}>
+          <div className='earn-task'>
             <div className="task-info">
-              <div className="task-title">Daily Login</div>
-              <button onClick={handleDailyLogin} disabled={!canClaimDaily}>Claim G$ 50,000</button>
+              <div className="task-title">Login Streak: {user.earnInfo.dailyLogin.streak}</div>
+              <button className='task-button' onClick={handleDailyLogin} disabled={!canClaimDaily}>G$ 50,000</button>
             </div>
           </div>
 
-          <div>
-              Invited Users:
-              <div>
-                {user?.invitedUsers.map((invitedUser, index) => (
-                  <div key={index}>
-                    <div>Username: {invitedUser.username}</div>
-                    <div>User ID: {invitedUser.userId}</div>
-                    <button>Claim Reward</button>
+          <div className='earn-task-invite'>
+            <div className='earn-task-invite-inner'>
+              <div>Invite a Friend</div>
+              <button onClick={handleShare} className='task-button'>Share</button>
+              <button onClick={() => { navigator.clipboard.writeText('https://t.me/gangster_games_pick3_bot/GangsterGamesPick3?startapp=refId' + user.userId); alert('Invite link copied to clipboard') }} className='task-button'><i className="far fa-copy"></i> Invite Link</button>
+            </div>
+              {user.invitedUsers.map((invitedUser, index) => (
+                <div className='invited-friends' key={index}>
+                  <div className='invited-friends-row'>
+                    <div>{invitedUser.username}</div>
+                    <button onClick={() => handleClaimInviteReward(index, 200000)} disabled={invitedUser.claimed} className='task-button'>
+                      {invitedUser.claimed ? 'Claimed' : 'G$ 200,000'}
+                    </button>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
           </div>
 
           {tasks.map((task, index) => (
-            <div
-              key={index}
-              className={`earn-task ${completedTasks[index] ? 'completed' : ''}`}
-              onClick={() => toggleTaskCompletion(index)}
-            >
+            <div key={index} className="earn-task">
               <div className="task-info">
                 <div className="task-title">{task.title}</div>
-                <div className="task-prize">G${task.prize.toLocaleString()}</div>
+                <div className="task-prize">
+                  <button className='task-button' onClick={() => {
+                    window.open(task.url, '_blank');
+                    handleFollowTaskCompletion(task.key, task.prize);
+                  }}>
+                    {user.earnInfo[task.key] ? 'Claimed' : `G$ ${task.prize.toLocaleString()}`}
+                  </button>
+                </div>
               </div>
-              {completedTasks[index] && <div className="task-checkmark">✔</div>}
             </div>
           ))}
+
         </div>
       </div>
     </div>
