@@ -4,11 +4,18 @@ import Godfather from '../assets/images/godfather.png';
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import { useUserContext } from '../context/UserContext';
 import { BossInfo } from '../context/UserContext';
+import Image01 from '../assets/images/boss-items/01.png';
+import Image02 from '../assets/images/boss-items/02.png';
+import Image03 from '../assets/images/boss-items/03.png';
+import Image04 from '../assets/images/boss-items/04.png';
+import Image05 from '../assets/images/boss-items/05.png';
+import Image06 from '../assets/images/boss-items/06.png';
 
 const Boss: React.FC = () => {
   const { user, updateUser } = useUserContext();
   const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
+  const images = [Image01, Image02, Image03, Image04, Image05, Image06];
 
   // TODO: - check also for telegram user from bot API
   if (!user) {
@@ -70,7 +77,7 @@ const Boss: React.FC = () => {
           {bossItems.map((item, index) => (
             <div key={index} className="boss-item" onClick={() => handleItemClick(index)}>
               <div className="boss-item-icon"> 
-                <img className='boss-image-item' src={item.imageUrl} alt="boss-item" />
+                <img className='boss-image-item' src={images[index]} alt="boss-item" />
                 <div>
                   {item.title}
                 </div>
