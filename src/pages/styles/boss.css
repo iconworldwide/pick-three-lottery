@@ -108,6 +108,15 @@
     margin: 0 auto;
   }
 
+  .boss-item-icon {
+    width: 100%;
+  }
+
+  .boss-image-item-container {
+    max-width: 100%;
+    background-color: #434242;
+  }
+
   .boss-image-item {
     max-width: 100%;
   }
