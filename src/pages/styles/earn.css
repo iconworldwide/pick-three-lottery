@@ -1,7 +1,7 @@
 /* earn.css */
 .tab-content-earn {
     background-color: #222;
-    min-height: 640px;
+    min-height: 840px;
   }
   
   .earn-container {
@@ -58,7 +58,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #222;
     padding-bottom: 10px;
   }
 
@@ -68,8 +67,8 @@
     overflow: scroll;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
-    padding: 20px;
     padding-top: 0;
+    border-top: 1px solid #222;
   }
 
   .invited-friends::-webkit-scrollbar { 
@@ -81,10 +80,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+    padding-bottom: 4px;
   }
   
   .earn-task:hover {
