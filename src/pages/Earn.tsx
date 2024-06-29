@@ -5,6 +5,7 @@ import { TonConnectButton } from "@tonconnect/ui-react";
 import { useTonConnect } from "../hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import { useUserContext } from '../context/UserContext';
+import { Timestamp } from 'firebase/firestore';
 
 const tasks = [
   { title: 'Follow us on Telegram', prize: 50000, url: "https://t.me/gangstergamesio", key: 'followOnTelegram'},
@@ -36,7 +37,7 @@ const Earn: React.FC = () => {
   const checkDailyLoginStatus = () => {
     if (!user) return;
     const now = new Date();
-    const lastLogin = new Date(user.earnInfo.dailyLogin.lastLogin);
+    const lastLogin = user.earnInfo.dailyLogin.lastLogin.toDate();
     if (now.toDateString() !== lastLogin.toDateString()) {
       setCanClaimDaily(true);
     } else {
@@ -47,10 +48,9 @@ const Earn: React.FC = () => {
   const handleDailyLogin = async () => {
     if (!user) return;
     const now = new Date();
-    const lastLogin = new Date(user.earnInfo.dailyLogin.lastLogin);
-    const newStreak = now.getDate() !== lastLogin.getDate() && now.getMonth() === lastLogin.getMonth() && now.getFullYear() === lastLogin.getFullYear()
-      ? user.earnInfo.dailyLogin.streak + 1
-      : 1;
+    const lastLogin = user.earnInfo.dailyLogin.lastLogin.toDate(); // Convert Firestore Timestamp to Date
+    const isNewStreakDay = now.getDate() !== lastLogin.getDate() || now.getMonth() !== lastLogin.getMonth() || now.getFullYear() !== lastLogin.getFullYear();
+    const newStreak = isNewStreakDay ? user.earnInfo.dailyLogin.streak + 1 : 1;
 
     const newCoins = user.coins + 50000;
     const updatedUser = {
@@ -60,7 +60,7 @@ const Earn: React.FC = () => {
         ...user.earnInfo,
         dailyLogin: {
           streak: newStreak,
-          lastLogin: now,
+          lastLogin: Timestamp.fromDate(now),
         }
       }
     };
@@ -99,8 +99,9 @@ const Earn: React.FC = () => {
 
   const handleShare = () => {
     const message = `Check out Gangster Games! Join through this link: https://t.me/gangster_games_pick3_bot/GangsterGamesPick3?startapp=refId${user?.userId}`;
-    window.Telegram.WebApp.shareText(message);
-  };
+    const url = `https://t.me/share/url?url=${encodeURIComponent(message)}`;
+    window.Telegram.WebApp.openTelegramLink(url);
+};
 
   useEffect(() => {
     checkDailyLoginStatus();

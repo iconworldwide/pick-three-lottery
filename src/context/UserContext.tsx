@@ -45,7 +45,7 @@ interface EarnInfo {
 
 interface DailyLogin {
   streak: number;
-  lastLogin: Date;
+  lastLogin: Timestamp;
 }
 
 interface User {
@@ -103,7 +103,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             followOnTelegram: false,
             followOnYoutube: false,
             followTikTok: false,
-            dailyLogin: { streak: 0, lastLogin: new Date() }
+            dailyLogin: { streak: 0, lastLogin: Timestamp.fromDate(new Date()) }
           }
         };
         await setDoc(userDoc, newUser);
