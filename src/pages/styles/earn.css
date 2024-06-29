@@ -59,6 +59,7 @@
     align-items: center;
     justify-content: space-between;
     padding-bottom: 10px;
+    border-bottom: 1px solid #222;
   }
 
   .invited-friends {
@@ -68,7 +69,6 @@
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;  /* Firefox */
     padding-top: 0;
-    border-top: 1px solid #222;
   }
 
   .invited-friends::-webkit-scrollbar { 
