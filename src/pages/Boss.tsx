@@ -19,7 +19,7 @@ const Boss: React.FC = () => {
 
   // TODO: - check also for telegram user from bot API
   if (!user) {
-    return <div>Loading...</div>;
+    return <div className='no-user'>We couldn't get your Telegram user_id, please login thru Telegram app.</div>;
   }
 
   const { bossInfo, coins } = user;

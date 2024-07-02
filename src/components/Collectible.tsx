@@ -6,11 +6,11 @@ import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import { Timestamp } from '@firebase/firestore-types';
 
 const ItemContainer = styled.div`  
-  border: 1px solid #ccc;
+  border: 1px solid #e9c46a;
   border-radius: 8px;
   margin: 16px;
   text-align: center;
-  background-color: #ccc;
+  background-color: #222;
   font-family: 'Sora', sans-serif;
 `;
 
@@ -23,12 +23,12 @@ const ItemImage = styled.img`
 const ItemTitle = styled.h3`
   margin: 4px 0;
   font-size: 22px;
-
+  color: #e9c46a;
 `;
 
 const ItemDescription = styled.p`
   font-size: 14px;
-  color: #555;
+  color: #e9c43c;
   margin: 4px 0;
 `;
 
@@ -38,20 +38,28 @@ const ItemDetails = styled.div`
   margin: 10px 0;
   margin-left: 10px;
   margin-right: 10px;
+  color: #e9c46a;
 `;
 
 const PurchaseButton = styled.button`
   padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #e9c46a;
+  font-family: 'Sora', sans-serif;
+  font-size: 24px;
+  color: #222;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  outline: none;
   margin-bottom: 8px;
   width: 260px;
 
   &:disabled {
     background-color: #ccc;
+  }
+
+  &:active { 
+    border-style: outset;
   }
 
   &:hover:not(:disabled) {
@@ -90,11 +98,14 @@ const Collectible: React.FC<CollectibleProps> = ({ item, owned, onPurchase }) =>
 
   return (
     <ItemContainer>
-      {imageUrl && <ItemImage src={imageUrl} alt={title} />}
+      <div className='image-container'>
+        {imageUrl && <ItemImage className='shimmer-effect' src={imageUrl} alt={title} />}
+        <div className="shimmer-overlay"></div>
+      </div>
       <ItemTitle>{title}</ItemTitle>
       <ItemDescription>{description}</ItemDescription>
       {owned && (
-        <div>
+        <div className='collection-item-container'>
           <ItemDetails>
             <div>Boss Level: <b>{requiredLevel}</b></div>
             <div>Price: <b>G$ {price.toLocaleString('en-us', { minimumFractionDigits: 0 })}</b></div>

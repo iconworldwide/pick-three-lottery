@@ -36,16 +36,12 @@
     align-items: center;
     padding: 8px;
     margin-bottom: 20px;
-    border: 2px solid #ddd;
+    border: 2px solid #e9c46a;
     border-radius: 10px;
     width: 80%;
-    background-color: #fff;
+    background-color: #222;
     transition: background-color 0.3s ease;
     cursor: pointer;
-  }
-  
-  .step-content:hover {
-    background-color: #f1f1f1;
   }
   
   .completed .step-content {
@@ -57,11 +53,20 @@
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #e9c46a;
+  }
+
+  .completed .step-title {
+    color: #222;
   }
   
   .step-description {
     font-size: 14px;
-    color: #666;
+    color: #e9c43c;
+  }
+
+  .completed .step-description {
+    color: #222;
   }
   
   .step-connector {

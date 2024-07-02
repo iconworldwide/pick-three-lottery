@@ -1,7 +1,7 @@
 /* earn.css */
 .tab-content-earn {
     background-color: #222;
-    min-height: 840px;
+    margin-bottom: 66px;
   }
   
   .earn-container {
@@ -39,18 +39,18 @@
     align-items: center;
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #e9c46a;
     border-radius: 10px;
-    background-color: #f9f9f9;
+    background-color: #222;
     transition: background-color 0.3s ease;
   }
 
   .earn-task-invite {
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #e9c46a;
     border-radius: 10px;
-    background-color: #f9f9f9;
+    background-color: #222;
     transition: background-color 0.3s ease;
   }
 
@@ -59,7 +59,8 @@
     align-items: center;
     justify-content: space-between;
     padding-bottom: 10px;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid #e9c46a;
+    color: #e9c46a;
   }
 
   .invited-friends {
@@ -82,12 +83,13 @@
     align-items: center;
     font-size: 14px;
     font-weight: normal;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e9c46a;
     padding-bottom: 4px;
+    color: #e9c43c;
   }
-  
-  .earn-task:hover {
-    background-color: #f1f1f1;
+
+  .invited-friends-row-title {
+    padding-left: 10px;
   }
   
   .task-logo {
@@ -104,11 +106,12 @@
   
   .task-title {
     font-size: 16px;
+    color: #e9c46a;
   }
   
   .task-prize {
     font-size: 16px;
-    color: #222;
+    color: #e9c46a;
   }
 
   .task-button {
@@ -137,4 +140,38 @@
     padding-left: 10px;
     font-size: 24px;
     color: green;
+  }
+
+  .image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* Ensure the container is responsive */
+    max-width: 600px; /* Adjust max-width as needed */
+    overflow: hidden; /* Hide overflow */
+  }
+
+  .shimmer-image {
+      width: 100%; /* Make the image responsive */
+      display: block; /* Remove bottom margin */
+  }
+
+  .shimmer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 100%);
+    transform: skewX(-25deg); /* Adjust skew for a subtle effect */
+    animation: shimmer 2s infinite;
+    animation-delay: 14s; /* Add delay between the effects */
+  }
+
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-150%) skewX(-25deg); /* Start further left */
+    }
+    100% {
+        transform: translateX(150%) skewX(-25deg); /* End further right */
+    }
   }

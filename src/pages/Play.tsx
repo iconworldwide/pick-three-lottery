@@ -111,6 +111,10 @@ function Play() {
     drawNumbers();
   };
 
+  if (!user) {
+    return <div className='no-user'>We couldn't get your Telegram user_id, please login thru Telegram app.</div>;
+  }
+
   return (
     <StyledApp className="tab-content">
       <AppContainer>
