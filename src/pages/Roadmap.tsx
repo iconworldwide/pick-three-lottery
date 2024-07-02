@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './styles/roadmap.css';
+import HelpPopupRoadmap from '../components/HelpPopupRoadmap';
 
 const steps = [
   { title: 'Step 1: TON Release', description: 'Release Pick 3 Lottery on TON', completed: true },
@@ -10,11 +11,19 @@ const steps = [
   { title: 'Step 6: Post-Launch', description: 'Open Gangster Games Game Studio, all holders will be airdropped Governance Token so we all decide what is next for us.', completed: false },
 ];
 
+
+
 const Roadmap: React.FC = () => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
   return (
     <div className="tab-content-roadmap">
       <div className="roadmap-container">
-        <h1 className="roadmap-title">Roadmap</h1>
+        <h1 className="roadmap-title">Roadmap<button className='question-button' onClick={togglePopup}>?</button></h1>
         <div className="roadmap-steps">
           {steps.map((step, index) => (
             <div key={index} className={`roadmap-step ${steps[index].completed ? 'completed' : ''}`}>
@@ -27,6 +36,7 @@ const Roadmap: React.FC = () => {
           ))}
         </div>
       </div>
+      {isPopupOpen && <HelpPopupRoadmap onClose={togglePopup} />}
     </div>
   );
 };

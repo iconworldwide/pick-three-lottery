@@ -82,6 +82,12 @@
     margin-bottom: 66px;
 }
 
+.cards-info-container {
+  display: flex;
+  justify-content: end;
+  padding: 4px;
+}
+
 .cards-container {
     display: flex;
     flex-wrap: wrap;

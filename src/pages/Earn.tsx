@@ -8,6 +8,7 @@ import { useUserContext } from '../context/UserContext';
 import { Timestamp } from 'firebase/firestore';
 import Godfather from '../assets/images/godfather.png';
 import Loading from '../assets/images/spinner.gif';
+import HelpPopupEarn from '../components/HelpPopupEarn';
 
 const tasks = [
   { title: 'Follow us on Telegram', prize: 50000, url: "https://t.me/gangstergamesio", key: 'followOnTelegram'},
@@ -20,6 +21,7 @@ const Earn: React.FC = () => {
   const { user, updateUser } = useUserContext();
   const { connected, wallet } = useTonConnect();
   const [canClaimDaily, setCanClaimDaily] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const rotatableImageRef = useRef<HTMLImageElement>(null);
   const [currentRotation, setCurrentRotation] = useState(0);
@@ -144,11 +146,15 @@ const Earn: React.FC = () => {
     </div>;
   }
 
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
   return (
     <div className="tab-content-earn">
       <div className="earn-container">
         <div className="earn-header">
-          <h1 className="earn-title">Earn More</h1>
+          <h1 className="earn-title">Earn More<button className='question-button' onClick={togglePopup}>?</button></h1>
           <div className="image-container-rotate">
             <img src={CoinImage} alt="Coin" className="rotatable-image" ref={rotatableImageRef} onClick={handleImageClick} />
           </div>
@@ -205,6 +211,7 @@ const Earn: React.FC = () => {
 
         </div>
       </div>
+      {isPopupOpen && <HelpPopupEarn onClose={togglePopup} />}
     </div>
   );
 };

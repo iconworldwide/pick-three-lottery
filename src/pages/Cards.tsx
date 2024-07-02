@@ -7,6 +7,7 @@ import usePreloadImages from '../hooks/usePreloadImages';
 import SegmentedControl from '../components/SegmentedControl';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../firebase';
+import HelpPopupCards from '../components/HelpPopupCards';
 
 const Cards: React.FC = () => {
   const { user, updateUser } = useUserContext();
@@ -14,6 +15,7 @@ const Cards: React.FC = () => {
   const [passedItems, setPassedItems] = useState<UserCards[]>([]);
   const [userCards, setUserCards] = useState<UserCards[]>(user?.cards || []);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const fetchCards = async () => {
     const q = query(collection(db, "cards"));
@@ -77,8 +79,15 @@ const Cards: React.FC = () => {
   const allImageUrls = [...currentItems, ...passedItems, ...userCards].map(item => item.imageUrl);
   usePreloadImages(allImageUrls);
 
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
   return (
     <div className='cards-main-container'>
+      <div className='cards-info-container'>
+        <button className='question-button' onClick={togglePopup}>?</button>
+      </div>
       <SegmentedControl
         name="group-1"
         callback={(val, index) => setSelectedIndex(index)}
@@ -99,7 +108,7 @@ const Cards: React.FC = () => {
           }
         ]}
       />
-
+      
       <div>
       {selectedIndex === 0 && (
           <div className='current-cards'>
@@ -133,6 +142,7 @@ const Cards: React.FC = () => {
           </div>
         )}
       </div>      
+      {isPopupOpen && <HelpPopupCards onClose={togglePopup} />}
     </div>   
   );
 };
