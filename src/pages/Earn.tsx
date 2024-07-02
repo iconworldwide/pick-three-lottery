@@ -178,7 +178,7 @@ const Earn: React.FC = () => {
               {user.invitedUsers.map((invitedUser, index) => (
                 <div className='invited-friends' key={index}>
                   <div className='invited-friends-row'>
-                    <div className='invited-friends-row-title'>{index}. {invitedUser.username}</div>
+                    <div className='invited-friends-row-title'>{index + 1}. {invitedUser.username}</div>
                     <button onClick={() => handleClaimInviteReward(index, 200000)} disabled={invitedUser.claimed} className='task-button'>
                       {invitedUser.claimed ? 'Claimed' : 'G$ 200,000'}
                     </button>

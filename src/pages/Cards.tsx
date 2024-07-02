@@ -52,7 +52,13 @@ const Cards: React.FC = () => {
   }, []);
 
   const handlePurchase = async (item: UserCards) => {
-    if (!user || user.coins < item.price) return;
+    if (!user || user.coins < item.price) {
+      alert("You don't have enough G$")
+      return;
+    } else if(user.bossInfo.bossLevel >= item.requiredLevel) {
+      alert(`Increase your boss level to level "${item.requiredLevel}"`);
+      return;
+    }
 
     const updatedUser = {
       ...user,
