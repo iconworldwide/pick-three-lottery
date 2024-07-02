@@ -17,6 +17,7 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
   const { user, updateUser } = useUserContext();
   const [progress, setProgress] = useState<number>(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isInfoPopupOpen, setIsInfoPopupOpen] = useState(false);
 
   const rotatableImageRef = useRef<HTMLImageElement>(null);
   const [currentRotation, setCurrentRotation] = useState(0);
@@ -67,6 +68,10 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
 
   }, [coins, level]);
 
+  const toggleInfoPopup = () => {
+    setIsInfoPopupOpen(!isInfoPopupOpen);
+  };
+
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
@@ -75,15 +80,16 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
     <div className="coin-display">
       <div className='top-info-display'>
         <div>Exact matches: {exactMatchCount}</div>
-        <div>{username}<button className='question-button' onClick={togglePopup}>?</button></div>
+        <div>{username}<button className='question-button' onClick={toggleInfoPopup}>?</button></div>
       </div>
       <div className="image-container-rotate">
         <img src={coin} alt="Coin" className="rotatable-image" ref={rotatableImageRef} onClick={handleImageClick} />
       </div>
-      <span>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}</span>
+      <span>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}<button className='question-button' onClick={togglePopup}>?</button></span>
       <div className='bottom-info-display'>
         <div>Level {level}</div>
-        {isPopupOpen && <HelpPopupInfoPlay onClose={togglePopup} />}
+        {isInfoPopupOpen && <HelpPopupInfoPlay onClose={toggleInfoPopup} />}
+        {isPopupOpen && <HelpPopup onClose={togglePopup} />}
         <div>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}/
           {Math.floor(10000 * Math.pow(2, level - 1)).toLocaleString('en-us', { minimumFractionDigits: 0 })}</div>
       </div>
