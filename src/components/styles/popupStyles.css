@@ -14,9 +14,23 @@
   .popup-content-info-play {
     background: #222;
     font-family: 'Sora', sans-serif;
-    font-size: 14px;
+    font-size: 12px;
+    text-align: left;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .instructions-headline {
+    font-size: 16;
+    font-weight: bold;
+  }
+
+  .instructions-body {
+    font-weight: normal;
+  }
+
+  .instructions-list {
+    padding-left: 4px;
   }
