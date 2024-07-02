@@ -28,9 +28,11 @@
   }
 
   .instructions-body {
-    font-weight: normal;
+    font-size: 10px;
+    font-weight: lighter;
   }
 
   .instructions-list {
     padding-left: 4px;
+    font-weight: normal;
   }
