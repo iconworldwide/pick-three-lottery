@@ -13,7 +13,7 @@
   }
   
   .dialog-container {
-    background: white;
+    background: #e9c46a;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -31,6 +31,9 @@
     font-size: 16px;
     cursor: pointer;
     font-family: 'Sora', sans-serif;
+    color: #222;
+    background-color: #e9c46a;
+    border: 1px solid #e9c46a;
   }
   
   @keyframes fadeIn {

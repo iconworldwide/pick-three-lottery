@@ -11,12 +11,14 @@ import Image04 from '../assets/images/boss-items/04.png';
 import Image05 from '../assets/images/boss-items/05.png';
 import Image06 from '../assets/images/boss-items/06.png';
 import Loading from '../assets/images/spinner.gif';
+import HelpPopupBoss from '../components/HelpPopupBoss';
 
 const Boss: React.FC = () => {
   const { user, updateUser } = useUserContext();
   const [isDialogVisible, setIsDialogVisible] = useState<boolean>(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
   const images = [Image01, Image02, Image03, Image04, Image05, Image06];
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   if (!user) {
     return <div className='no-user'>
@@ -70,12 +72,16 @@ const Boss: React.FC = () => {
     setSelectedItem(null);
   };
 
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
   return (
     <div className="tab-content-boss">
       <div className="boss-container">
         <div className="boss-header">
           <span className="boss-label">Coins: G$ {user.coins.toLocaleString()}</span>
-          <span className='boss-label'>Boss Level: {bossLevel}</span>
+          <span className='boss-label'>Boss Level: {bossLevel}<button className='question-button' onClick={togglePopup}>?</button></span>
         </div>
         <div className="boss-image">
           <img src={Godfather} alt="Godfather" />
@@ -106,6 +112,7 @@ const Boss: React.FC = () => {
             onCancel={handleCancel}
           />
         )}
+        {isPopupOpen && <HelpPopupBoss onClose={togglePopup} />}
       </div>
     </div>
   );
