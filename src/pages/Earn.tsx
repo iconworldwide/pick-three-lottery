@@ -6,6 +6,8 @@ import { useTonConnect } from "../hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import { useUserContext } from '../context/UserContext';
 import { Timestamp } from 'firebase/firestore';
+import Godfather from '../assets/images/godfather.png';
+import Loading from '../assets/images/spinner.gif';
 
 const tasks = [
   { title: 'Follow us on Telegram', prize: 50000, url: "https://t.me/gangstergamesio", key: 'followOnTelegram'},
@@ -132,7 +134,14 @@ const Earn: React.FC = () => {
   }, [user]);
 
   if (!user) {
-    return <div className='no-user'>We couldn't get your Telegram user_id, please login thru Telegram app.</div>;
+    return <div className='no-user'>
+      <div>
+        <img style={{ width: '240px'}} src={Godfather} alt="godfather" />
+      </div>
+      <div>
+        <img style={{ width: '100px'}} src={Loading} alt="spinner" />
+      </div>
+    </div>;
   }
 
   return (

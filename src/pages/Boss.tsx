@@ -10,6 +10,7 @@ import Image03 from '../assets/images/boss-items/03.png';
 import Image04 from '../assets/images/boss-items/04.png';
 import Image05 from '../assets/images/boss-items/05.png';
 import Image06 from '../assets/images/boss-items/06.png';
+import Loading from '../assets/images/spinner.gif';
 
 const Boss: React.FC = () => {
   const { user, updateUser } = useUserContext();
@@ -17,9 +18,15 @@ const Boss: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
   const images = [Image01, Image02, Image03, Image04, Image05, Image06];
 
-  // TODO: - check also for telegram user from bot API
   if (!user) {
-    return <div className='no-user'>We couldn't get your Telegram user_id, please login thru Telegram app.</div>;
+    return <div className='no-user'>
+      <div>
+        <img style={{ width: '240px'}} src={Godfather} alt="godfather" />
+      </div>
+      <div>
+        <img style={{ width: '100px'}} src={Loading} alt="spinner" />
+      </div>
+    </div>;
   }
 
   const { bossInfo, coins } = user;

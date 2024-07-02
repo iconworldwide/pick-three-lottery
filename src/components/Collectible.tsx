@@ -61,10 +61,6 @@ const PurchaseButton = styled.button`
   &:active { 
     border-style: outset;
   }
-
-  &:hover:not(:disabled) {
-    background-color: #0056b3;
-  }
 `;
 
 interface CollectibleProps {
