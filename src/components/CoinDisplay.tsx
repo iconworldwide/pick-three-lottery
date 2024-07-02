@@ -74,14 +74,14 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
     <div className="coin-display">
       <div className='top-info-display'>
         <div>Exact matches: {exactMatchCount}</div>
-        <div>{username}</div>
+        <div>{username}<button className='question-button' onClick={togglePopup}>?</button></div>
       </div>
       <div className="image-container-rotate">
         <img src={coin} alt="Coin" className="rotatable-image" ref={rotatableImageRef} onClick={handleImageClick} />
       </div>
       <span>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}</span>
       <div className='bottom-info-display'>
-        <div>Level {level}<button className='question-button' onClick={togglePopup}>?</button></div>
+        <div>Level {level}</div>
         {isPopupOpen && <HelpPopup onClose={togglePopup} />}
         <div>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}/
           {Math.floor(10000 * Math.pow(2, level - 1)).toLocaleString('en-us', { minimumFractionDigits: 0 })}</div>
