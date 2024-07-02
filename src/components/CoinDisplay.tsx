@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import coin from '../assets/images/coin.png';
 import "./styles/coinDisplay.css";
 import ProgressBar from './ProgressBar';
@@ -16,6 +16,30 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
   const { user, updateUser } = useUserContext();
   const [progress, setProgress] = useState<number>(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const rotatableImageRef = useRef<HTMLImageElement>(null);
+  const [currentRotation, setCurrentRotation] = useState(0);
+
+  const handleImageClick = () => {
+      const rotatableImage = rotatableImageRef.current;
+      const newRotation = currentRotation + 1800; // 5 full flips
+
+      if (rotatableImage) {
+          // Quick multiple flips
+          rotatableImage.style.transition = 'transform 1s ease-in-out';
+          rotatableImage.style.transform = `rotateY(${newRotation}deg)`;
+
+          // Slowly stop flipping
+          setTimeout(() => {
+              const finalRotation = newRotation + 360; // Additional full flip to stop slowly
+              rotatableImage.style.transition = 'transform 3s ease-out';
+              rotatableImage.style.transform = `rotateY(${finalRotation}deg)`;
+              setCurrentRotation(finalRotation);
+          }, 1000); // Wait for the quick flips to complete
+      } else {
+          setCurrentRotation(newRotation);
+      }
+  };
 
   useEffect(() => {
     const coinsForNextLevel = 10000 * Math.pow(2, level - 1);
@@ -52,7 +76,10 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
         <div>Exact matches: {exactMatchCount}</div>
         <div>{username}</div>
       </div>
-      <img src={coin} alt="Coin" />
+      <div className="image-container-rotate">
+        <img src={coin} alt="Coin" className="rotatable-image shimmer-effect" ref={rotatableImageRef} onClick={handleImageClick} />
+        <div className='shimmer-overlay'></div>
+      </div>
       <span>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}</span>
       <div className='bottom-info-display'>
         <div>Level {level}<button className='question-button' onClick={togglePopup}>?</button></div>

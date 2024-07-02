@@ -142,12 +142,13 @@
     color: green;
   }
 
-  .image-container {
+  .image-container-rotate {
     position: relative;
     display: inline-block;
     width: 100%; /* Ensure the container is responsive */
     max-width: 600px; /* Adjust max-width as needed */
     overflow: hidden; /* Hide overflow */
+    perspective: 1000px; /* Add perspective for 3D effect */
   }
 
   .shimmer-image {
@@ -176,4 +177,10 @@
     100% {
         transform: translateX(150%) skewX(-25deg); /* Hold position for the rest of the duration */
     }
+  }
+
+  .rotatable-image {
+    width: 100%; /* Make the image responsive */
+    display: block; /* Remove bottom margin */
+    transform-style: preserve-3d; /* Enable 3D transform */
   }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './styles/earn.css'
 import CoinImage from '../assets/images/coin.png';
 import { TonConnectButton } from "@tonconnect/ui-react";
@@ -18,6 +18,30 @@ const Earn: React.FC = () => {
   const { user, updateUser } = useUserContext();
   const { connected, wallet } = useTonConnect();
   const [canClaimDaily, setCanClaimDaily] = useState(false);
+
+  const rotatableImageRef = useRef<HTMLImageElement>(null);
+  const [currentRotation, setCurrentRotation] = useState(0);
+
+  const handleImageClick = () => {
+      const rotatableImage = rotatableImageRef.current;
+      const newRotation = currentRotation + 1800; // 5 full flips
+
+      if (rotatableImage) {
+          // Quick multiple flips
+          rotatableImage.style.transition = 'transform 1s ease-in-out';
+          rotatableImage.style.transform = `rotateY(${newRotation}deg)`;
+
+          // Slowly stop flipping
+          setTimeout(() => {
+              const finalRotation = newRotation + 360; // Additional full flip to stop slowly
+              rotatableImage.style.transition = 'transform 3s ease-out';
+              rotatableImage.style.transform = `rotateY(${finalRotation}deg)`;
+              setCurrentRotation(finalRotation);
+          }, 1000); // Wait for the quick flips to complete
+      } else {
+          setCurrentRotation(newRotation);
+      }
+  };
 
   useEffect(() => {
     if (user && !user.earnInfo.tonWalletConnected && connected) {
@@ -116,7 +140,10 @@ const Earn: React.FC = () => {
       <div className="earn-container">
         <div className="earn-header">
           <h1 className="earn-title">Earn More</h1>
-          <img src={CoinImage} alt="Coin" className="coin-image" />
+          <div className="image-container-rotate">
+            <img src={CoinImage} alt="Coin" className="rotatable-image shimmer-effect" ref={rotatableImageRef} onClick={handleImageClick} />
+            <div className='shimmer-overlay'></div>
+          </div>
         </div>
         <div className="earn-tasks">
           <div className='earn-task'>
