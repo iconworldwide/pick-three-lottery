@@ -163,15 +163,17 @@
     height: 100%;
     background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0) 100%);
     transform: skewX(-25deg); /* Adjust skew for a subtle effect */
-    animation: shimmer 2s infinite;
-    animation-delay: 14s; /* Add delay between the effects */
+    animation: shimmer 6s infinite; /* Total duration including delay */
   }
 
   @keyframes shimmer {
     0% {
       transform: translateX(-150%) skewX(-25deg); /* Start further left */
     }
-    100% {
+    33.33% {
         transform: translateX(150%) skewX(-25deg); /* End further right */
+    }
+    100% {
+        transform: translateX(150%) skewX(-25deg); /* Hold position for the rest of the duration */
     }
   }
