@@ -16,10 +16,13 @@
     font-family: 'Sora', sans-serif;
     font-size: 12px;
     text-align: left;
-    padding: 20px;
+    padding: 10px;
     border-radius: 8px;
     text-align: left;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .instructions-headline {
