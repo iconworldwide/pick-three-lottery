@@ -4,6 +4,7 @@ import "./styles/coinDisplay.css";
 import ProgressBar from './ProgressBar';
 import HelpPopup from './HelpPopup';
 import { useUserContext } from '../context/UserContext';
+import HelpPopupInfoPlay from './HelpPopupInfoPlay';
 
 interface CoinDisplayProps {
   username: string;
@@ -82,7 +83,7 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
       <span>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}</span>
       <div className='bottom-info-display'>
         <div>Level {level}</div>
-        {isPopupOpen && <HelpPopup onClose={togglePopup} />}
+        {isPopupOpen && <HelpPopupInfoPlay onClose={togglePopup} />}
         <div>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}/
           {Math.floor(10000 * Math.pow(2, level - 1)).toLocaleString('en-us', { minimumFractionDigits: 0 })}</div>
       </div>
