@@ -141,8 +141,7 @@ const Earn: React.FC = () => {
         <div className="earn-header">
           <h1 className="earn-title">Earn More</h1>
           <div className="image-container-rotate">
-            <img src={CoinImage} alt="Coin" className="rotatable-image shimmer-effect" ref={rotatableImageRef} onClick={handleImageClick} />
-            <div className='shimmer-overlay'></div>
+            <img src={CoinImage} alt="Coin" className="rotatable-image" ref={rotatableImageRef} onClick={handleImageClick} />
           </div>
         </div>
         <div className="earn-tasks">

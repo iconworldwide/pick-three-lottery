@@ -77,8 +77,7 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
         <div>{username}</div>
       </div>
       <div className="image-container-rotate">
-        <img src={coin} alt="Coin" className="rotatable-image shimmer-effect" ref={rotatableImageRef} onClick={handleImageClick} />
-        <div className='shimmer-overlay'></div>
+        <img src={coin} alt="Coin" className="rotatable-image" ref={rotatableImageRef} onClick={handleImageClick} />
       </div>
       <span>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}</span>
       <div className='bottom-info-display'>

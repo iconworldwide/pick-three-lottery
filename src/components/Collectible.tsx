@@ -98,7 +98,7 @@ const Collectible: React.FC<CollectibleProps> = ({ item, owned, onPurchase }) =>
 
   return (
     <ItemContainer>
-      <div className='image-container-rotate'>
+      <div className='image-container'>
         {imageUrl && <ItemImage className='shimmer-effect' src={imageUrl} alt={title} />}
         <div className="shimmer-overlay"></div>
       </div>
