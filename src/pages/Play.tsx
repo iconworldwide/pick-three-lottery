@@ -8,6 +8,7 @@ import DrawButton from "../components/DrawButton";
 import { useUserContext } from '../context/UserContext';
 import Godfather from '../assets/images/godfather.png';
 import Loading from '../assets/images/spinner.gif';
+import HelpPopupInfoPlay from "../components/HelpPopupInfoPlay";
 
 const StyledApp = styled.div`
   background-color: #222;
@@ -33,6 +34,20 @@ function Play() {
 
   const [numbers, setNumbers] = useState<number[]>([]);
   const [exactMatch, setExactMatch] = useState<boolean>(true);
+
+  const [isFirstWalkthruComplete, setIsFirstWalkthruComplete] = useState<boolean>(() => {
+    const firstWalkthruCompleted = localStorage.getItem('isFirstWalkthruComplete');
+    return firstWalkthruCompleted === 'true';
+  });
+
+  const handleFirstWalkthruComplete = () => {
+    setIsFirstWalkthruComplete(true);
+    localStorage.setItem('isFirstWalkthruComplete', 'true');
+  };
+
+  if (!isFirstWalkthruComplete) {
+    return <HelpPopupInfoPlay onClose={handleFirstWalkthruComplete} />;
+  }
 
   const selectNumber = (position: number, num: number) => {
     const newNumbers = [...numbers];
