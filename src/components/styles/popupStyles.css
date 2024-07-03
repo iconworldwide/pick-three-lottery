@@ -43,9 +43,18 @@
     font-weight: lighter;
     padding-top: 8px;
     padding-bottom: 8px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 400;
   }
 
   .instructions-list {
     padding-left: 8px;
     font-weight: normal;
+    display: flex;
+    align-items: baseline;
+  }
+
+  .instructions-list p {
+    margin: 0;
+    margin-right: 4px;
   }

@@ -88,12 +88,12 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           exactMatches: 0,
           invitedUsers: [],
           bossInfo: { bossLevel: 1, bossItems: [
-            { imageUrl: '💰', title: 'Protection', description: 'Increase Boss Level by 1', price: 10000, level: 1 },
-            { imageUrl: '🎲', title: 'Gambling', description: 'Increase Boss Level by 1', price: 10000, level: 1 },
-            { imageUrl: '🎁', title: 'Cigars', description: 'Increase Boss Level by 1', price: 10000, level: 1 },
-            { imageUrl: '🍕', title: 'Pizza', description: 'Increase Boss Level by 1', price: 10000, level: 1 },
-            { imageUrl: '💎', title: 'Diamonds', description: 'Increase Boss Level by 1', price: 10000, level: 1 },
-            { imageUrl: '🏆', title: 'Cannoli', description: 'Increase Boss Level by 1', price: 10000, level: 1 },
+            { imageUrl: '💰', title: 'Protection', description: 'Boss Level +1', price: 10000, level: 1 },
+            { imageUrl: '🎲', title: 'Gambling', description: 'Boss Level +1', price: 10000, level: 1 },
+            { imageUrl: '🎁', title: 'Cigars', description: 'Boss Level +1', price: 10000, level: 1 },
+            { imageUrl: '🍕', title: 'Pizza', description: 'Boss Level +1', price: 10000, level: 1 },
+            { imageUrl: '💎', title: 'Diamonds', description: 'Boss Level +1', price: 10000, level: 1 },
+            { imageUrl: '🏆', title: 'Cannoli', description: 'Boss Level +1', price: 10000, level: 1 },
           ] },
           cards: [],
           earnInfo: {
