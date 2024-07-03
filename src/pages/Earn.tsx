@@ -177,9 +177,11 @@ const Earn: React.FC = () => {
 
           <div className='earn-task-invite'>
             <div className='earn-task-invite-inner'>
-              <div>Invite Friend</div>
-              <button onClick={handleShare} className='task-button'>Share</button>
-              <button onClick={() => { navigator.clipboard.writeText('https://t.me/gangster_games_pick3_bot/GangsterGamesPick3?startapp=refId' + user.userId); alert('Invite link copied to clipboard') }} className='task-button'><i className="far fa-copy"></i> Invite Link</button>
+              <div className='earn-invite-text'>Invite Friend</div>
+              <div className='earn-button-container'>
+                <button onClick={handleShare} className='task-button'>Share</button>
+                <button onClick={() => { navigator.clipboard.writeText('https://t.me/gangster_games_pick3_bot/GangsterGamesPick3?startapp=refId' + user.userId); alert('Invite link copied to clipboard') }} className='task-button'><i className="far fa-copy"></i> Invite Link</button>
+              </div>
             </div>
               {user.invitedUsers.map((invitedUser, index) => (
                 <div className='invited-friends' key={index}>
