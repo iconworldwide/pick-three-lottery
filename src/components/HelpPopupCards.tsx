@@ -6,8 +6,8 @@ interface HelpPopupCardsProps {
 
 const HelpPopupCards: React.FC<HelpPopupCardsProps> = ({ onClose }) => {
   return (
-    <div className="popup-overlay">
-      <div className="popup-content">
+    <div className="popup-overlay-info-play">
+      <div className="popup-content-info-play">
         <div>
           <div className='instructions-headline'>Cards Guide</div>
           <div className='instructions-h1'>Collecting Cards</div>
