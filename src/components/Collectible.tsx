@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { UserCards } from '../context/UserContext'; 
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
-
-import { Timestamp } from '@firebase/firestore-types';
 
 const ItemContainer = styled.div`  
   border: 1px solid #e9c46a;
@@ -30,6 +27,8 @@ const ItemDescription = styled.p`
   font-size: 14px;
   color: #e9c43c;
   margin: 4px 0;
+  padding-left: 4px;
+  padding-right: 4px;
 `;
 
 const ItemDetails = styled.div`
@@ -70,32 +69,12 @@ interface CollectibleProps {
 }
 
 const Collectible: React.FC<CollectibleProps> = ({ item, owned, onPurchase }) => {
-  const [imageUrl, setImageUrl] = useState<string>('');
-  const storage = getStorage();
   const { title, description, requiredLevel, price, passed } = item;
-
-
-  const fireBaseTime = new Date(
-    item.endDate.seconds * 1000 + item.endDate.nanoseconds / 1000000,
-  ).toLocaleString();
-
-  useEffect(() => {
-    const fetchImageUrl = async () => {
-      try {
-        const url = await getDownloadURL(ref(storage, item.imageUrl));
-        setImageUrl(url);
-      } catch (error) {
-        console.error("Error fetching image URL: ", error);
-      }
-    };
-
-    fetchImageUrl();
-  }, [item.imageUrl, storage]);
-
+  
   return (
     <ItemContainer>
       <div className='image-container'>
-        {imageUrl && <ItemImage className='shimmer-effect' src={imageUrl} alt={title} />}
+        <ItemImage className='shimmer-effect' src={item.imageUrl} alt={title} />
         <div className="shimmer-overlay"></div>
       </div>
       <ItemTitle>{title}</ItemTitle>
@@ -105,9 +84,6 @@ const Collectible: React.FC<CollectibleProps> = ({ item, owned, onPurchase }) =>
           <ItemDetails>
             <div>Boss Level: <b>{requiredLevel}</b></div>
             <div>Price: <b>G$ {price.toLocaleString('en-us', { minimumFractionDigits: 0 })}</b></div>
-          </ItemDetails>
-          <ItemDetails>
-            <div>End Sale Date: <b>{fireBaseTime}</b></div>
           </ItemDetails>
           <PurchaseButton onClick={() => onPurchase(item)} disabled={passed}>
             {passed ? 'Passed' : 'Buy'}

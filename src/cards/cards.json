@@ -1,0 +1,210 @@
+[{
+    "id": 1,
+    "passed": false,
+    "description": "When Crime and Pastries Collide",
+    "imageUrl": "1.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Don Cannoli, The Sweetest Kingpin of the Underground Dessert Empire"
+}
+,
+{
+    "id": 2,
+    "passed": false,
+    "description": "No people, no problem chiko.",
+    "imageUrl": "2.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Hire Toni Montana to clear your enemies."
+}
+,
+{
+    "id": 3,
+    "passed": false,
+    "description": "Never go unnoticed again. Have a sleek Cadillac tail you wherever you go.",
+    "imageUrl": "3.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Cadillac Car Following"
+}
+,
+{
+    "id": 4,
+    "passed": false,
+    "description": "Make the major an offer he can't refuse",
+    "imageUrl": "4.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Private meeting with Rudy Giuliani"
+}
+,
+{
+    "id": 5,
+    "passed": false,
+    "description": "He's gonna repeat everything, repeat everything.",
+    "imageUrl": "5.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Dinner with Tony 'Two-Times' Russo"
+}
+,
+{
+    "id": 6,
+    "passed": false,
+    "description": "Get the latest dirt from Louie, whether you want it or not.",
+    "imageUrl": "6.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Louie 'The Lip' Lombardi's Gossip Hour"
+}
+,
+{
+    "id": 7,
+    "passed": false,
+    "description": "When Vinny's around, nothing is left behind, especially the crumbs.",
+    "imageUrl": "7.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Vinny 'The Vacuum' Venturi's Clean-Up Service"
+}
+,
+{
+    "id": 8,
+    "passed": false,
+    "description": "Think you can outsmart Bobby? Fuggedaboutit!",
+    "imageUrl": "8.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Bobby 'The Brain' Brancato's Trivia Night"
+}
+,
+{
+    "id": 9,
+    "passed": false,
+    "description": "Frankie 'Fingers' Fabiano's Piano Recital",
+    "imageUrl": "9.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Ivory keys and broken knees, all in a day's work for Frankie."
+}
+,
+{
+    "id": 10,
+    "passed": false,
+    "description": "Mickey 'The Mouth' Mancini's Auction",
+    "imageUrl": "10.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Going once, going twice, sold to the guy with the big mouth!"
+}
+,
+{
+    "id": 11,
+    "passed": false,
+    "description": "Can you outwit the slipperiest guy in town? Probably not.",
+    "imageUrl": "11.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Sammy 'The Snake' Sorrentino's Escape Room"
+}
+,
+{
+    "id": 12,
+    "passed": false,
+    "description": "Laugh or else. Seriously, it's funny business.",
+    "imageUrl": "12.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Johnny 'Jokes' Giordano's Comedy Night"
+}
+,
+{
+    "id": 13,
+    "passed": false,
+    "description": "Fresh cuts and even fresher gossip from Sal's deli.",
+    "imageUrl": "13.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Sal 'The Salami' Santoro's Deli Specials"
+}
+,
+{
+    "id": 14,
+    "passed": false,
+    "description": "They fly fast and they talk faster. Bet on Pauly's pigeons!",
+    "imageUrl": "14.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Pauly 'The Pigeon' Pignatelli's Racing Pigeons"
+}
+,
+{
+    "id": 15,
+    "passed": false,
+    "description": "Secure your spot and sell the freshest fish in town. It's a fin-tastic opportunity!",
+    "imageUrl": "15.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Get a Stand at the Fulton Fish Market"
+}
+,
+{
+    "id": 16,
+    "passed": false,
+    "description": "For those who need a little extra persuasion. The ultimate in mobster footwear!",
+    "imageUrl": "16.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Free Pair of Cement Shoes"
+}
+,
+{
+    "id": 17,
+    "passed": false,
+    "description": "Enjoy sun, sea, and...strategic planning. It's not just a vacation; it's a business trip.",
+    "imageUrl": "17.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "A Week in Miami on Joe Red's Boat"
+}
+,
+{
+    "id": 18,
+    "passed": false,
+    "description": "Make moves like a Wall Street shark. Get the scoop and rake in the profits!",
+    "imageUrl": "18.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Inside Information on Stock Trades"
+}
+,
+{
+    "id": 19,
+    "passed": false,
+    "description": "The biggest construction deal of the decade. Make your mark on the city that never sleeps.",
+    "imageUrl": "19.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Contract to Build New York City Airport"
+}
+,
+{
+    "id": 20,
+    "passed": false,
+    "description": "Try your luck with the ultimate gangster's casino game. You might just hit the jackpot!",
+    "imageUrl": "20.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "Free Slot Machine"
+}
+,
+{
+    "id": 21,
+    "passed": true,
+    "description": "Only OG Gangsters and early birds had opportunity to buy this OG card.",
+    "imageUrl": "21.png",
+    "price": 1000000,
+    "requiredLevel": 10,
+    "title": "OG Gangsters"
+}
+]

@@ -3,14 +3,12 @@ import { db } from '../firebase';
 import { doc, setDoc, getDoc, updateDoc, arrayUnion, Timestamp } from "firebase/firestore";
 
 export interface UserCards {
-    id: string;
+    id: Number;
     title: string;
     description: string;
     price: number;
     requiredLevel: number;
     imageUrl: string;
-    startDate: Timestamp;
-    endDate: Timestamp;
     passed: boolean;
 }
 
