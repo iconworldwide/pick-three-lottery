@@ -9,18 +9,28 @@ const HelpPopupEarn: React.FC<HelpPopupEarnProps> = ({ onClose }) => {
     <div className="popup-overlay-info-play">
       <div className="popup-content-info-play">
         <div>
-          <div className='instructions-headline'>Boss Guide</div>
-          <div className='instructions-h1'>Benefits of Increasing Boss Level</div>
-          <div className='instructions-list'>• Unlock More Cards. A higher boss level allows you to purchase more cards.</div>
-          <div className='instructions-list'>• Future Airdrop Rewards. Higher boss levels qualify you for bigger rewards in our future airdrop.</div>
-          <div className='instructions-list'>• The more you invest in your boss, the greater the potential rewards.</div>
+          <div className='instructions-headline'>Earn Guide</div>
+          <div className='instructions-h1'>What to do</div>
+          <div className='instructions-list'><p>•</p>Click the Connect Wallet button to link your wallet and receive G$ 500,000. This task can be completed once.</div>
+          <div className='instructions-list'><p>•</p>Daily Login. Click the Claim G$ 50,000 button to claim your daily reward. Maintain your streak by logging in daily.</div>
+          <div className='instructions-h1'>Follow Us on Social Media</div>
+          <div className='instructions-list'><p>•</p>Click the Follow button to open the respective social media platform.</div>
+          <div className='instructions-list'><p>•</p>Follow our account to earn coins.</div>
+          <div className='instructions-list'><p>•</p>Once completed, the button will display Claimed.</div>
+          <div className='instructions-list'><p>•</p>Social media platforms include Telegram, X (formerly Twitter), Youtube, and TikTok.</div>
+          <div className='instructions-h1'>Invite Friends</div>
+          <div className='instructions-list'><p>•</p>Click the Share button to send an invite message to your friends via Telegram.</div>
+          <div className='instructions-list'><p>•</p>Alternatively, click the Invite Link button to copy the invite link to your clipboard.</div>
+          <div className='instructions-list'><p>•</p>Share the link with your friends to invite them.</div>
+          <div className='instructions-list'><p>•</p>Once your friends join, their usernames will appear in the invited friends list.</div>
+          <div className='instructions-list'><p>•</p>Click the Claim G$ 200,000 button next to each friend's name to claim your reward.</div>
           <div className='instructions-headline'>Tips</div>
-          <div className='instructions-list'>• Regularly check your coin balance and boss level to plan your purchases effectively.</div>
-          <div className='instructions-list'>• Focus on purchasing items that provide the best boost to your boss level.</div>
-          <div className='instructions-list'>• Keep an eye on new items added to the shop to maximize your growth.</div>
-          <div className='instructions-list'>• New items will be added accordingly.</div>
-          <div className='instructions-body'>The Boss allows you to spend your G$ to purchase items for the boss, increasing your boss level. A higher boss level unlocks more cards for purchase and provides bigger rewards in our future airdrop.</div>
-          <div className='instructions-body'>By following this guide, you will have a better understanding of the Boss and how to strategically increase your boss level for maximum benefits. Enjoy building your empire!</div>
+          <div className='instructions-list'><p>•</p>Regularly check the Earn screen for new tasks and opportunities to earn coins.</div>
+          <div className='instructions-list'><p>•</p>Maintain your daily login streak to maximize your earnings.</div>
+          <div className='instructions-list'><p>•</p>Invite more friends to earn additional rewards.</div>
+          <div className='instructions-list'><p>•</p>Follow us on all available social media platforms to claim all possible rewards.</div>
+          <div className='instructions-body'>The Earn screen provides multiple ways for users to earn extra coins by completing daily tasks, inviting friends, and following us on social media.</div>
+          <div className='instructions-body'>Future Developments! Additional Earning Options: We are working on adding more tasks and activities for users to earn coins. Stay tuned for updates on new earning opportunities. Happy earning!</div>
         </div>
         <button className='closeButton' onClick={onClose}>Close</button>
       </div>
