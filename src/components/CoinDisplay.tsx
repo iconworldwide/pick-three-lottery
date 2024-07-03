@@ -85,7 +85,7 @@ const CoinDisplay: React.FC<CoinDisplayProps> = ({ username, coins, exactMatchCo
       <div className="image-container-rotate">
         <img src={coin} alt="Coin" className="rotatable-image" ref={rotatableImageRef} onClick={handleImageClick} />
       </div>
-      <span>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}<button className='question-button' onClick={togglePopup}>?</button></span>
+      <span className='balance-display'>G$ {coins.toLocaleString('en-us', { minimumFractionDigits: 0 })}<button className='question-button' onClick={togglePopup}>?</button></span>
       <div className='bottom-info-display'>
         <div>Level {level}</div>
         {isInfoPopupOpen && <HelpPopupInfoPlay onClose={toggleInfoPopup} />}
