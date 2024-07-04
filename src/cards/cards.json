@@ -81,21 +81,21 @@
 {
     "id": 9,
     "passed": false,
-    "description": "Frankie 'Fingers' Fabiano's Piano Recital",
+    "description": "Ivory keys and broken knees, all in a day's work for Frankie.",
     "imageUrl": "9.png",
     "price": 1000000,
     "requiredLevel": 10,
-    "title": "Ivory keys and broken knees, all in a day's work for Frankie."
+    "title": "Frankie 'Fingers' Fabiano's Piano Recital"
 }
 ,
 {
     "id": 10,
     "passed": false,
-    "description": "Mickey 'The Mouth' Mancini's Auction",
+    "description": "Going once, going twice, sold to the guy with the big mouth!",
     "imageUrl": "10.png",
     "price": 1000000,
     "requiredLevel": 10,
-    "title": "Going once, going twice, sold to the guy with the big mouth!"
+    "title": "Mickey 'The Mouth' Mancini's Auction"
 }
 ,
 {
