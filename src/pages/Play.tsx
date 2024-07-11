@@ -37,6 +37,20 @@ function Play() {
   const [numbers, setNumbers] = useState<number[]>([]);
   const [exactMatch, setExactMatch] = useState<boolean>(true);
 
+  useEffect (() => {
+    // Ensure the WebApp is ready before calling the method
+    const tg = window.Telegram.WebApp;
+    tg.onEvent('webAppReady', () => {
+      tg.disableVerticalSwipes(); 
+      console.log('Vertical swipes disabled:', !tg.isVerticalSwipesEnabled);
+    });
+    // If the WebApp is already initialized
+    if(tg.initDataUnsafe) {
+      tg.disableVerticalSwipes(); 
+      console.log('Vertical swipes disabled:', !tg.isVerticalSwipesEnabled);
+    }
+  }, []) ;
+
   const selectNumber = (position: number, num: number) => {
     const newNumbers = [...numbers];
     newNumbers[position] = num;
