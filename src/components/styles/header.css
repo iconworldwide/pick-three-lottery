@@ -33,6 +33,7 @@ th, td {
 }
 .row-title {
   text-align: left;
+  color: white;
 }
 .row-subtitle {
   text-align: left;
@@ -124,6 +125,10 @@ th, td {
     font-size: 16px;
     padding: 0;
     margin-left: 6px;
+  }
+
+  .color-white {
+    color: white;
   }
   
   .coin-display {

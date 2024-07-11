@@ -17,22 +17,22 @@ const HelpPopup: React.FC<HelpPopupProps> = ({ onClose }) => {
               </tr>
               <tr>
                 <td className="row-subtitle">Match 2 numbers</td>
-                <td>$1,000</td>
+                <td className='color-white'>$1,000</td>
               </tr>
               <tr>
                 <td className="row-title">Match 3 numbers</td>
-                <td>$1,500</td>
+                <td className='color-white'>$1,500</td>
               </tr>
               <tr className="any-order">
                 <td colSpan={2} className="section-title">ANY ORDER:<br />Match in any order.</td>
               </tr>
               <tr>
                 <td className="row-title">Match 2 numbers</td>
-                <td>$250</td>
+                <td className='color-white'>$250</td>
               </tr>
               <tr>
                 <td className="row-subtitle">Match 3 numbers</td>
-                <td>$500</td>
+                <td className='color-white'>$500</td>
               </tr>
             </tbody>
           </table>
