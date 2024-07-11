@@ -100,17 +100,17 @@ function Play() {
     if (exactMatch) {
       const exactMatches = calculateExactMatches(numbers, newDraw);
       if (exactMatches === 3) {
-        winnings = 1500;
+        winnings = (user.bossInfo.bossLevel * 1500);
         exactMatchesCounter = exactMatchesCounter + 1;
       } else if (exactMatches === 2) {
-        winnings = 1000;
+        winnings = (user.bossInfo.bossLevel * 1000);
       }
     } else {
       const anyMatches = calculateAnyMatches(numbers, newDraw);
       if (anyMatches === 3) {
-        winnings = 500;
+        winnings = (user.bossInfo.bossLevel * 500);
       } else if (anyMatches === 2) {
-        winnings = 250;
+        winnings = (user.bossInfo.bossLevel * 250);
       }
     }
 
@@ -170,7 +170,7 @@ function Play() {
                 <span>Tap to play</span>
                 <span className="instruction-rewards-container">View rewards<button className='question-button' onClick={togglePopup}>?</button></span>
               </div>
-              {isPopupOpen && <HelpPopup onClose={togglePopup} />}
+              {isPopupOpen && <HelpPopup bossLevel={user.bossInfo.bossLevel} onClose={togglePopup} />}
               {/* <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDсrawEnabled} /> */}
             </>
          )}
