@@ -109,6 +109,7 @@
   .draw-main-button {
     background-color: transparent;
     border: none;
+    user-select: none;
   }
 
   .draw-main-button img {
@@ -120,13 +121,10 @@
     aspect-ratio: 1;
     transform: perspective(800px) rotateY(var(--a));
     transition: .1s;
+    user-select: none;
   }
 
   .draw-main-button img:active {
-    /* transform: scale(0.98);
-    transition: transform .0815s linear;
-    box-shadow:2px 2px 10px rgba(0,0,0,0.3); */
-
     --a: 16deg;
   }
 
