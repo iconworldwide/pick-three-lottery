@@ -93,7 +93,7 @@ function Play() {
     if (!user) return;
     // Simulate drawing numbers with a delay
     const newDraw = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
-    window.Telegram.WebApp.HapticFeedback.impactOccured("medium");
+    window.Telegram.WebApp.HapticFeedback.impactOccurred("medium");
     // Calculate winnings
     let winnings = 0;
     let exactMatchesCounter = user.exactMatches;
