@@ -72,6 +72,7 @@ th, td {
     border-radius: 8px;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
   }
   
   .header-content {
@@ -83,7 +84,6 @@ th, td {
     width: 90%;
     margin: 0 auto;
     margin-top: 10px;
-    margin-bottom: 10px;
     padding: 4px;
     border: 2px solid #e9c46a;
     box-sizing: border-box;

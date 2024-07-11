@@ -36,4 +36,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 32px;
+}
+
+.instruction-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #e9c46a;
+    font-size: 14px;
+}
+
+.instruction-rewards-container {
+    display: flex;
+    align-items: center;
 }

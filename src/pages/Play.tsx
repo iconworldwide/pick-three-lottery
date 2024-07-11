@@ -8,6 +8,8 @@ import DrawButton from "../components/DrawButton";
 import { useUserContext } from '../context/UserContext';
 import Godfather from '../assets/images/godfather.png';
 import Loading from '../assets/images/spinner.gif';
+import coin from '../assets/images/coin.png';
+import HelpPopup from "../components/HelpPopup";
 
 const StyledApp = styled.div`
   background-color: #222;
@@ -30,6 +32,7 @@ function Play() {
   const [lastDraw, setLastDraw] = useState<number[]>([0, 0, 0]);
   const [isDrawEnabled, setIsDrawEnabled] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [numbers, setNumbers] = useState<number[]>([]);
   const [exactMatch, setExactMatch] = useState<boolean>(true);
@@ -76,7 +79,10 @@ function Play() {
     if (!user) return;
     // Simulate drawing numbers with a delay
     const newDraw = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
-
+    if (navigator.vibrate) {
+      // Vibrate for 200 milliseconds
+      navigator.vibrate(200);
+    }
     // Calculate winnings
     let winnings = 0;
     let exactMatchesCounter = user.exactMatches;
@@ -110,7 +116,15 @@ function Play() {
   };
 
   const handleDraw = () => {
-    drawNumbers();
+    if (!isDrawEnabled) {
+      alert('Please select a number for each position before drawing.');
+    } else {
+      drawNumbers();
+    }
+  };
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
   };
 
   if (!user) {
@@ -131,16 +145,24 @@ function Play() {
         {user && (
             <>
               <CoinDisplay username={user.username} coins={user.coins} exactMatchCount={user.exactMatches} level={user.level} />
-              <Header lastDraw={lastDraw} />
               <BetForm
                 numbers={numbers}
                 exactMatch={exactMatch}
                 selectNumber={selectNumber}
                 toggleExactMatch={toggleExactMatch}
               />
-              <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDrawEnabled} />
+              <Header lastDraw={lastDraw} />
+              <button className='draw-main-button' onClick={handleDraw} disabled={isLoading}>
+                <img src={coin} alt="Coin" className="rotatable-image" />
+              </button>
+              <div className="instruction-container">
+                <span>Tap to play</span>
+                <span className="instruction-rewards-container">View rewards<button className='question-button' onClick={togglePopup}>?</button></span>
+              </div>
+              {isPopupOpen && <HelpPopup onClose={togglePopup} />}
+              {/* <DrawButton drawNumbers={handleDraw} isDisabled={isLoading} numbersSelected={isDсrawEnabled} /> */}
             </>
-          )}
+         )}
         </div>
       </AppContainer>
     </StyledApp>
