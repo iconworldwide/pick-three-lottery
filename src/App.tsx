@@ -27,7 +27,8 @@ const AppWrapper: React.FC = () => {
     if (userData.user) {
       const userInformation = JSON.parse(userData.user);
       if (userInformation.id && !user) {
-        registerUser(userInformation.id, userInformation.username);
+        const usernameFirstName = userInformation.username ? userInformation.username : userInformation.first_name;
+        registerUser(userInformation.id, usernameFirstName);
 
         const searchParams = new URLSearchParams(window.location.search);
         const queryString = searchParams.toString();
@@ -36,7 +37,7 @@ const AppWrapper: React.FC = () => {
           if (refId) {
             const refIdString = extractRefIdNumber(refId);
             if (refIdString !== null) {
-              saveInvitation(refIdString, userInformation.id, userInformation.username);
+              saveInvitation(refIdString, userInformation.id, usernameFirstName);
             }
           }
         }
