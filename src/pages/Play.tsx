@@ -114,20 +114,22 @@ function Play() {
     let winnings = 0;
     let exactMatchesCounter = user.exactMatches;
     if (exactMatch) {
-      onShoot();
       const exactMatches = calculateExactMatches(numbers, newDraw);
       if (exactMatches === 3) {
         winnings = (user.bossInfo.bossLevel * 1500);
         exactMatchesCounter = exactMatchesCounter + 1;
+        onShoot();
       } else if (exactMatches === 2) {
         winnings = (user.bossInfo.bossLevel * 1000);
+        onShoot();
       }
     } else {
-      onShoot()
       const anyMatches = calculateAnyMatches(numbers, newDraw);
       if (anyMatches === 3) {
+        onShoot()
         winnings = (user.bossInfo.bossLevel * 500);
       } else if (anyMatches === 2) {
+        onShoot()
         winnings = (user.bossInfo.bossLevel * 250);
       }
     }
