@@ -37,6 +37,7 @@ function Play() {
 
   const [numbers, setNumbers] = useState<number[]>([]);
   const [exactMatch, setExactMatch] = useState<boolean>(true);
+  const [isWin, setIsWin] = useState<boolean>(false);
 
   useEffect (() => {
     // Ensure the WebApp is ready before calling the method
@@ -99,7 +100,7 @@ function Play() {
     let winnings = 0;
     let exactMatchesCounter = user.exactMatches;
     if (exactMatch) {
-      <Fireworks autorun={{ speed: 3 }} />;
+      setIsWin(true);
       const exactMatches = calculateExactMatches(numbers, newDraw);
       if (exactMatches === 3) {
         winnings = (user.bossInfo.bossLevel * 1500);
@@ -108,7 +109,7 @@ function Play() {
         winnings = (user.bossInfo.bossLevel * 1000);
       }
     } else {
-      <Fireworks autorun={{ speed: 3 }} />;
+      setIsWin(true);
       const anyMatches = calculateAnyMatches(numbers, newDraw);
       if (anyMatches === 3) {
         winnings = (user.bossInfo.bossLevel * 500);
@@ -158,6 +159,7 @@ function Play() {
         <div className="container">
         {user && (
             <>
+              {isWin && <Fireworks autorun={{ speed: 3 }} /> }
               <CoinDisplay username={user.username} coins={user.coins} exactMatchCount={user.exactMatches} level={user.level} />
               <BetForm
                 numbers={numbers}
