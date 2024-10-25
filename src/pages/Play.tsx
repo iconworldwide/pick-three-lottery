@@ -10,6 +10,7 @@ import Godfather from '../assets/images/godfather.png';
 import Loading from '../assets/images/spinner.gif';
 import coin from '../assets/images/coin.png';
 import HelpPopup from "../components/HelpPopup";
+import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
 
 const StyledApp = styled.div`
   background-color: #222;
@@ -98,6 +99,7 @@ function Play() {
     let winnings = 0;
     let exactMatchesCounter = user.exactMatches;
     if (exactMatch) {
+      <Fireworks autorun={{ speed: 3 }} />;
       const exactMatches = calculateExactMatches(numbers, newDraw);
       if (exactMatches === 3) {
         winnings = (user.bossInfo.bossLevel * 1500);
@@ -106,6 +108,7 @@ function Play() {
         winnings = (user.bossInfo.bossLevel * 1000);
       }
     } else {
+      <Fireworks autorun={{ speed: 3 }} />;
       const anyMatches = calculateAnyMatches(numbers, newDraw);
       if (anyMatches === 3) {
         winnings = (user.bossInfo.bossLevel * 500);
