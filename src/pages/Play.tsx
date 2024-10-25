@@ -10,7 +10,7 @@ import Godfather from '../assets/images/godfather.png';
 import Loading from '../assets/images/spinner.gif';
 import coin from '../assets/images/coin.png';
 import HelpPopup from "../components/HelpPopup";
-import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
+import Fireworks from "react-canvas-confetti/dist/presets/explosion";
 
 const StyledApp = styled.div`
   background-color: #222;
@@ -28,6 +28,10 @@ const AppContainer = styled.div`
   margin: 0 auto;
 `;
 
+interface Conductor {
+  shoot: () => void;  // We know `shoot` exists, so define it
+}
+
 function Play() {
   const { user, updateUser } = useUserContext();
   const [lastDraw, setLastDraw] = useState<number[]>([0, 0, 0]);
@@ -37,7 +41,17 @@ function Play() {
 
   const [numbers, setNumbers] = useState<number[]>([]);
   const [exactMatch, setExactMatch] = useState<boolean>(true);
-  const [isWin, setIsWin] = useState<boolean>(false);
+  const controller = useRef<Conductor | null>(null);
+
+  const onInitHandler = ({ conductor }: { conductor: Conductor }) => {
+    controller.current = conductor;
+  };
+
+  const onShoot = () => {
+    if(controller.current != null) {
+      controller.current.shoot();
+    }
+  };
 
   useEffect (() => {
     // Ensure the WebApp is ready before calling the method
@@ -100,7 +114,7 @@ function Play() {
     let winnings = 0;
     let exactMatchesCounter = user.exactMatches;
     if (exactMatch) {
-      setIsWin(true);
+      onShoot();
       const exactMatches = calculateExactMatches(numbers, newDraw);
       if (exactMatches === 3) {
         winnings = (user.bossInfo.bossLevel * 1500);
@@ -109,7 +123,7 @@ function Play() {
         winnings = (user.bossInfo.bossLevel * 1000);
       }
     } else {
-      setIsWin(true);
+      onShoot()
       const anyMatches = calculateAnyMatches(numbers, newDraw);
       if (anyMatches === 3) {
         winnings = (user.bossInfo.bossLevel * 500);
@@ -159,7 +173,7 @@ function Play() {
         <div className="container">
         {user && (
             <>
-              {isWin && <Fireworks autorun={{ speed: 3 }} /> }
+              <Fireworks onInit={onInitHandler} />
               <CoinDisplay username={user.username} coins={user.coins} exactMatchCount={user.exactMatches} level={user.level} />
               <BetForm
                 numbers={numbers}
